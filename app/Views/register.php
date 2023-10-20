@@ -17,8 +17,11 @@
                 <div class="card-body">
                     <form method="post" action="http://localhost/libreria/public/registro-de-usuarios">
                         <div class="mb-3">
+                            <label for="name" class="form-label">Nombre</label>
+                            <input type="name" class="form-control" name="name" id="name" aria-describedby="Input de nombre" required>
+                        <div class="mb-3">
                             <label for="email" class="form-label">Dirección de correo electrónico</label>
-                            <input type="email" class="form-control" name="email" id="email" aria-describedby="Input de email">
+                            <input type="email" class="form-control" name="email" id="email" aria-describedby="Input de email" required>
                             
                         </div>
                         <div class="mb-3">

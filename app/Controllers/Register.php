@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Controllers;
+use App\Models\RegistroModel;
 class Register extends BaseController
 {
    
@@ -8,13 +9,19 @@ class Register extends BaseController
     {
         return view('register');
     }
-
+    public function success(){
+        return view('success');
+    }
     public function guardar()
     {
-    $correo = $this->request->getPost('email');
-    $password = $this->request->getPost('password');
-    $password2 = $this->request->getPost('password2');
+        $registroModel = new RegistroModel();
+        $registroModel->insert([
+            'name'=>$this->request->getPost('name'),
+            'email'=>$this->request->getPost('email'),
+            'password'=>$this->request->getPost('password'),
+        ]);
 
-    var_dump($correo);
+        // Redirigir al usuario a la página de éxito
+        return redirect()->to('/success');
     }
 }
