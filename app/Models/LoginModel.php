@@ -3,7 +3,7 @@
 namespace App\Models;
 use CodeIgniter\Model;
 
-class RegistroModel extends Model {
+class LoginModel extends Model {
     protected $table      = 'userdata';
     protected $primaryKey = 'id';
 
@@ -12,7 +12,7 @@ class RegistroModel extends Model {
     protected $returnType     = 'array';
     protected $useSoftDeletes = false;
 
-    protected $allowedFields = ['name', 'email', 'password'];
+    protected $allowedFields = ['id', 'name', 'email', 'password'];
 
     // Dates
     protected $useTimestamps = false;

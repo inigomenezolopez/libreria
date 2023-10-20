@@ -15,13 +15,26 @@ class Register extends BaseController
     public function guardar()
     {
         $registroModel = new RegistroModel();
-        $registroModel->insert([
-            'name'=>$this->request->getPost('name'),
-            'email'=>$this->request->getPost('email'),
-            'password'=>$this->request->getPost('password'),
-        ]);
+       $name = $this->request->getPost('name');
+       $email = $this->request->getPost('email');
+       $password = $this->request->getPost('password');
 
-        // Redirigir al usuario a la página de éxito
+       
+
+       $data = ['name' => $name,'email'=> $email,'password'=> $password];
+
+       $r = $registroModel->insert($data);
+
+       if($r){
         return redirect()->to('/success');
+       }
+       else{
+        echo "Error en el registro. Inténtalo de nuevo.";
+       }
+
+
+
+
+        
     }
 }

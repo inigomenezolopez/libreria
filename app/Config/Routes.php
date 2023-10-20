@@ -9,8 +9,11 @@ $routes->get('/', 'Home::index');
 
 $routes->get('/register', 'Register::index');
 
-$routes->get('/login', 'Login::index');
-
-$routes->post('/registro-de-usuarios', 'Register::guardar');
+$routes->post('/register', 'Register::guardar');
 
 $routes->get('/success', 'Register::success');
+
+
+$routes->get('/login', 'Login::index');
+
+$routes->post('/login', 'Login::login_form');
