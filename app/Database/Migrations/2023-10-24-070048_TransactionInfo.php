@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class CreateUserdataTable extends Migration
+class TransactionInfo extends Migration
 {
     public function up()
     {
@@ -18,25 +18,30 @@ class CreateUserdataTable extends Migration
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
             ],
-            "email"=> [
-                "type"=>"VARCHAR",
-                "constraint"=>"255",
-            ],
-            "password"=> [
+            "title"=> [
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
+            ],
+            "price"=> [
+                "type"=>"INT",
             ],
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'
         ]);
-
+        
         $this->forge->addkey('id', true);
         $this->forge->addkey('name');
-        $this->forge->createTable('userdata');
+        $this->forge->addkey('title');
+        $this->forge->addkey('price');
+        $this->forge->addForeignKey('name','userdata','name','CASCADE','CASCADE');
+        $this->forge->addForeignKey('title','comic_info','title','CASCADE','CASCADE');
+        $this->forge->addForeignKey('price','comic_info','price','CASCADE','CASCADE');
+        $this->forge->createTable('trans_info');
+        
         }
 
     public function down()
     {
-        $this->forge->dropTable('userdata');
+        $this->forge->dropTable('trans_info');
     }
 }

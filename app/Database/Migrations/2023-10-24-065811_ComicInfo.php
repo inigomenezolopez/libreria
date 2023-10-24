@@ -36,14 +36,18 @@ class ComicInfo extends Migration
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'
         ]);
-
+        
         $this->forge->addkey('id', true);
-        $this->forge->createTable('comicinfo');
+        $this->forge->addkey('title');
+        $this->forge->addkey('price');
+        $this->forge->addkey('category');
+        $this->forge->createTable('comic_info');
+        
         }
     
 
     public function down()
     {
-        $this->forge->dropTable('comicinfo');
+        $this->forge->dropTable('comic_info');
     }
 }

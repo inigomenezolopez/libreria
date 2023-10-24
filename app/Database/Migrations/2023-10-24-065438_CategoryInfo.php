@@ -4,7 +4,7 @@ namespace App\Database\Migrations;
 
 use CodeIgniter\Database\Migration;
 
-class TransactionInfo extends Migration
+class CategoryInfo extends Migration
 {
     public function up()
     {
@@ -14,28 +14,21 @@ class TransactionInfo extends Migration
                 "unsigned"=>true,
                 "auto_increment"=> true,
             ],
-            "name" => [
+            "category" => [
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
-            ],
-            "title"=> [
-                "type"=> "VARCHAR",
-                "constraint"=>"255",
-            ],
-            "price"=> [
-                "type"=>"INT",
             ],
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'
         ]);
 
         $this->forge->addkey('id', true);
-        $this->forge->createTable('trans_info');
-        $this->forge->addForeignKey('name','userdata','name');
+        $this->forge->addkey('category');
+        $this->forge->createTable('category_info');
         }
 
     public function down()
     {
-        $this->forge->dropTable('trans_info');
+        $this->forge->dropTable('category_info');
     }
 }
