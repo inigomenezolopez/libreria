@@ -18,13 +18,21 @@ $routes->get('/login', 'Login::index');
 
 $routes->post('/login', 'Login::login_form');
 
+
 $routes->group('admin', static function($routes){
     $routes->group('', [], static function($routes){
-        $routes->view('example-page','example-page');
+       
+        $routes->get('home','AdminController::index', ['as'=> 'admin.home']);
     });
 
     $routes->group('', [], static function($routes){
-        $routes->view('example-auth','example-auth');
+        
+        
+        $routes->get('authlogin','AuthController::loginForm', ['as'=> 'admin.login.form']);
+        $routes->post('authlogin', 'AuthController::loginHandler');
+        
     });
-
+        
+        
+    
 });
