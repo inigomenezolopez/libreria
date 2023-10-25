@@ -20,12 +20,13 @@ $routes->post('/login', 'Login::login_form');
 
 
 $routes->group('admin', static function($routes){
-    $routes->group('', [], static function($routes){
+    $routes->group('', ['filter'=>'cifilter:auth'], static function($routes){
        
         $routes->get('home','AdminController::index', ['as'=> 'admin.home']);
+        $routes->get('logout','AdminController::logoutHandler');
     });
 
-    $routes->group('', [], static function($routes){
+    $routes->group('', ['filter'=>'cifilter:guest'], static function($routes){
         
         
         $routes->get('authlogin','AuthController::loginForm', ['as'=> 'admin.login.form']);

@@ -3,6 +3,7 @@
 namespace App\Database\Seeds;
 
 use CodeIgniter\Database\Seeder;
+use App\Libraries\Hash; 
 
 class UserSeeder extends Seeder
 {
@@ -11,7 +12,7 @@ class UserSeeder extends Seeder
         $data = array(
             "name"=> 'Admin',
             "email"=> 'admin@email.com',
-            "password"=> '12345',
+            "password"=> Hash::make('12345'),
         );
         $this->db->table('userdata')->insert($data);
     }
