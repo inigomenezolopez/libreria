@@ -9,7 +9,6 @@ use App\Models\LoginModel;
 use App\Models\PasswordResetToken;
 use Carbon\Carbon;
 
-
 class AuthController extends BaseController
 {
     protected $helpers = ['url', 'form', 'CIMail'];
@@ -144,7 +143,6 @@ class AuthController extends BaseController
                 );
 
                 //send email
-                
                 if (sendEmail($mailConfig)){
                     return redirect()->route('admin.forgot.form')->with('success','Te hemos enviado un email con el enlace para restablecer la contraseña.');
                 } else {
