@@ -132,6 +132,8 @@ class AuthController extends BaseController
 
                 $view = \Config\Services::renderer();
                 $mail_body = $view->setVar('mail_data', $mail_data)->render('email-templates/forgot-email-template');
+                
+                
 
                 $mailConfig = array(
                     'mail_from_email'=>env('EMAIL_FROM_ADDRESS'),

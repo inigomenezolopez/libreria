@@ -14,6 +14,8 @@ if (!function_exists('sendEmail')) {
         require 'PHPMailer/src/SMTP.php';
 
         $mail = new PHPMailer(true);
+        
+        $mail->CharSet = 'UTF-8';
        
         $mail->SMTPDebug = 2;
 
