@@ -1,5 +1,6 @@
 <?php
 
+use App\Controllers\AuthController;
 use CodeIgniter\Router\RouteCollection;
 
 /**
@@ -19,7 +20,7 @@ $routes->get('/login', 'Login::index');
 $routes->post('/login', 'Login::login_form');
 
 
-$routes->group('admin', static function($routes){
+$routes->group('/admin', static function($routes){
     $routes->group('', ['filter'=>'cifilter:auth'], static function($routes){
        
         $routes->get('home','AdminController::index', ['as'=> 'admin.home']);
@@ -30,8 +31,10 @@ $routes->group('admin', static function($routes){
         
         
         $routes->get('authlogin','AuthController::loginForm', ['as'=> 'admin.login.form']);
-        $routes->post('authlogin', 'AuthController::loginHandler');
-        
+        $routes->post('authlogin', 'AuthController::loginHandler', ['as'=> 'admin.login.handler']);
+        $routes->get('forgot-password', 'AuthController::forgotForm', ['as' => 'admin.forgot.form']);
+        $routes->post('send-password-reset-link', 'AuthController::sendPasswordResetLink', ['as'=> 'send_password_reset_link']);
+        $routes->get('password/reset/(:any)','AuthController:resetPassword/$1', ['as'=> 'admin.reset-password']);
     });
         
         

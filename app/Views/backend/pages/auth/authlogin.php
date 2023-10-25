@@ -6,7 +6,7 @@
         <h2 class="text-center text-primary">Login</h2>
     </div>
     <?php $validation = \Config\Services::validation(); ?>
-    <form action="http://localhost/libreria/public/admin/authlogin" method="POST">
+    <form action="<?= base_url(route_to('admin.login.handler')) ?>" method="POST">
         <?= csrf_field () ?>
         <?php if(!empty(session()->getFlashdata('success'))) : ?>
             <div class="alert alert-success">
@@ -56,7 +56,7 @@
             </div>
             <div class="col-6">
                 <div class="forgot-password">
-                    <a href="forgot-password.html">Forgot Password</a>
+                    <a href="<?= base_url(route_to('admin.forgot.form')) ?>">Forgot Password</a>
                 </div>
             </div>
         </div>
