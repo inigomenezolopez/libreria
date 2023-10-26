@@ -31,7 +31,7 @@
         <?php endif; ?>
 
         <div class="input-group custom">
-            <input type="text" class="form-control form-control-lg" placeholder="Email" name="email" value="<?= set_value('email') ?>">
+            <input type="email" class="form-control form-control-lg" placeholder="Email" name="email" value="<?= set_value('email') ?>">
             <div class="input-group-append custom">
                 <span class="input-group-text"><i class="fa fa-envelope-o" aria-hidden="true"></i></span>
             </div>

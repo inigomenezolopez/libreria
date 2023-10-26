@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Libraries;
+use App\Models\LoginModel;
 
 class CIAuth {
     public static function setCIAuth($result) {
@@ -38,7 +39,9 @@ class CIAuth {
         $session = session();
         if ($session->has('logged_in')){
             if($session->has('userdata')) {
-                return $session->get('userdata');
+               // return $session->get('userdata');
+               $user = new LoginModel();
+               return $user->asObject()->where('id', CIAuth::id())->first();
             } else {
                 return null;
             }

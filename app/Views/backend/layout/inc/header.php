@@ -105,16 +105,14 @@
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"
 						>
-							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-user1"></i> Profile</a
+							<a class="dropdown-item" href="<?= base_url(route_to('admin.profile')); ?>"
+								><i class="dw dw-user1"></i> Perfil</a
 							>
 							<a class="dropdown-item" href="profile.html"
-								><i class="dw dw-settings2"></i> Setting</a
+								><i class="dw dw-settings2"></i> Ajustes</a
 							>
-							<a class="dropdown-item" href="faq.html"
-								><i class="dw dw-help"></i> Help</a
-							>
-							<a class="dropdown-item" href="http://localhost/libreria/public/admin/logout"
+							
+							<a class="dropdown-item" href="<?= base_url(route_to('admin.logout')); ?>"
 								><i class="dw dw-logout"></i> Log Out</a
 							>
 						</div>

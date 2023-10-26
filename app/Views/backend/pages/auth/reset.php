@@ -29,7 +29,7 @@
         <?php endif; ?>
 
         <div class="input-group custom">
-            <input type="text" class="form-control form-control-lg" placeholder="New Password" name="new_password">
+            <input type="password" class="form-control form-control-lg" placeholder="New Password" name="new_password">
             <div class="input-group-append custom" value="<?= set_value('new_password') ?>">
                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
             </div>
@@ -42,7 +42,7 @@
         <?php endif; ?>
 
         <div class="input-group custom">
-            <input type="text" class="form-control form-control-lg" placeholder="Confirm New Password" name="confirm_new_password" value="<?= set_value('confirm_new_password') ?>">
+            <input type="password" class="form-control form-control-lg" placeholder="Confirm New Password" name="confirm_new_password" value="<?= set_value('confirm_new_password') ?>">
             <div class="input-group-append custom">
                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
             </div>
