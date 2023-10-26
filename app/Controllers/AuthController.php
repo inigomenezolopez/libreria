@@ -123,7 +123,7 @@ class AuthController extends BaseController
 
                 // create action link
                 $actionLink = base_url(route_to('admin.reset-password', $token));
-
+                
                 $mail_data = array(
                     'actionLink'=>$actionLink,
                     'user'=>$user_info,
@@ -153,5 +153,9 @@ class AuthController extends BaseController
 
             }
 
+    }
+
+    public function resetPassword($token){
+        echo $token;
     }
 }
