@@ -98,9 +98,9 @@
 							data-toggle="dropdown"
 						>
 							<span class="user-icon">
-								<img src="/libreria/public/backend/vendors/images/photo1.jpg" alt="" />
+								<img src="<?= base_url(get_user()->picture == null ? '/images/users/default-avatar.png' : '/images/users/'.get_user()->picture) ?>" alt="" class="ci-avatar-photo"/>
 							</span>
-							<span class="user-name">Ross C. Lopez</span>
+							<span class="user-name ci-user-name"><?= get_user()->name?></span>
 						</a>
 						<div
 							class="dropdown-menu dropdown-menu-right dropdown-menu-icon-list"

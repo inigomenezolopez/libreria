@@ -18,6 +18,7 @@ class CreateUserdataTable extends Migration
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
             ],
+
             "email"=> [
                 "type"=>"VARCHAR",
                 "constraint"=>"255",
@@ -26,6 +27,17 @@ class CreateUserdataTable extends Migration
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
             ],
+
+            "picture"=> [
+                "type"=> "VARCHAR",
+                "constraint"=>"255",
+                "null" => true,
+            ],
+            "bio"=> [
+                'type' => 'TEXT',
+                'null' => true,
+                ],
+
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'
         ]);
