@@ -21,6 +21,7 @@
 	<link rel="stylesheet" type="text/css" href="/libreria/public/backend/vendors/styles/icon-font.min.css" />
 	<link rel="stylesheet" type="text/css" href="/libreria/public/backend/vendors/styles/style.css" />
 	<link rel="stylesheet" href="/libreria/public/extra-assets/ijabo/ijabo.min.css">
+	<link rel="stylesheet" href="/libreria/public/extra-assets/ijaboCropTool/ijaboCropTool.min.css">
 	<?= $this->renderSection('stylesheets') ?>
 </head>
 
@@ -94,6 +95,7 @@
 		<script src="/libreria/public/backend/vendors/scripts/layout-settings.js"></script>
 		<script src="/libreria/public/extra-assets/ijabo/ijabo.min.js"></script>
 		<script src="/libreria/public/extra-assets/ijabo/jquery.ijaboViewer.min.js"></script>
+		<script src="/libreria/public/extra-assets/ijaboCropTool/ijaboCropTool.min.js"></script>
 		<?= $this->renderSection('scripts') ?>
 </body>
 
