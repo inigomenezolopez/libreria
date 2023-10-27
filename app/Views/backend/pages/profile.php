@@ -84,7 +84,35 @@
                         <!-- Tasks Tab start -->
                         <div class="tab-pane fade" id="change_password" role="tabpanel">
                             <div class="pd-20 profile-task-wrap">
-                                ---- Cambiar contraseña ----
+                                <form action="<?= base_url(route_to('change-password')) ?>" method="POST" id="change_password_form">
+                                    <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" class="ci_csrf_data">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Contraseña actual</label>
+                                                <input type="password" class="form-control" placeholder="Introduce tu contraseña actual" name="current_password">
+                                                <span class="text-danger error-test current_password_error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Nueva contraseña</label>
+                                                <input type="password" class="form-control" placeholder="Introduce tu nueva contraseña" name="new_password">
+                                                <span class="text-danger error-test new_password_error"></span>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-group">
+                                                <label for="">Confirma tu nueva contraseña</label>
+                                                <input type="password" class="form-control" placeholder="Introduce otra vez tu nueva contraseña" name="confirm_new_password">
+                                                <span class="text-danger error-test confirm_new_password_error"></span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <button type="submit" class="btn btn-primary">Cambiar contraseña</button>
+                                    </div>
+                                </form>
                             </div>
                         </div>
                         <!-- Tasks Tab End -->
@@ -117,17 +145,17 @@
             },
             success: function(response) {
                 if ($.isEmptyObject(response.error)) {
-                        if (response.status == 1) {
-                            $('.ci-user-name').each(function(){
-                                $(this).html(response.user_info.name);
-                            });
-                            toastr.success(response.msg);
-                        } else {
-                            toastr.error(response.msg);
-                        }
+                    if (response.status == 1) {
+                        $('.ci-user-name').each(function() {
+                            $(this).html(response.user_info.name);
+                        });
+                        toastr.success(response.msg);
+                    } else {
+                        toastr.error(response.msg);
+                    }
                 } else {
                     $.each(response.error, function(prefix, val) {
-                        $(form).find('span.'+prefix+'_error').text(val);
+                        $(form).find('span.' + prefix + '_error').text(val);
                     });
                 }
             }
@@ -135,22 +163,67 @@
     });
 
     $('#user_profile_file').ijaboCropTool({
-          preview : '.ci-avatar-photo',
-          setRatio:1,
-          allowedExtensions: ['jpg', 'jpeg','png'],
-          processUrl:'<?= base_url(route_to('update-profile-picture')) ?>',
-          withCSRF:['<?= csrf_token() ?>','<?= csrf_hash() ?>'],
-          onSuccess:function(message, element, status){
+        preview: '.ci-avatar-photo',
+        setRatio: 1,
+        allowedExtensions: ['jpg', 'jpeg', 'png'],
+        processUrl: '<?= base_url(route_to('update-profile-picture')) ?>',
+        withCSRF: ['<?= csrf_token() ?>', '<?= csrf_hash() ?>'],
+        onSuccess: function(message, element, status) {
             if (status == 1) {
                 toastr.success(message);
             } else {
                 toastr.error(message);
             }
-          },
-          onError:function(message, element, status){
+        },
+        onError: function(message, element, status) {
             alert(message);
-          }
-      });   
+        }
+    });
 
+    // cambiar contraseña
+    $('#change_password_form').on('submit', function(e) {
+        e.preventDefault();
+        //CSRF Hash
+        var csrfName = $('.ci_csrf_data').attr('name'); // CSRF Token Name
+        var csrfHash = $('.ci_csrf_data').val();
+        var form = this;
+        var formdata = new FormData(form);
+        formdata.append(csrfName, csrfHash);
+
+        $.ajax({
+            url: $(form).attr('action'),
+            method: $(form).attr('method'),
+            data: formdata,
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            beforeSend: function() {
+                toastr.remove();
+                $(form).find('span.error-text').text('');
+
+            },
+            success: function(response) {
+                // update csrf hash
+                $('.ci_csrf_data').val(response.token);
+
+                if ($.isEmptyObject(response.error)) {
+                    if (response.status == 1) {
+                        $(form)[0].reset();
+                        toastr.success(response.msg);
+
+                    } else {
+                        toastr.error(response.msg);
+
+                    }
+                } else {
+                    $.each(response.error, function(prefix, val) {
+                        $(form).find('span.' + prefix + '_error').text(val);
+                    });
+                }
+            }
+
+        });
+    });
 </script>
 <?= $this->endSection() ?>
