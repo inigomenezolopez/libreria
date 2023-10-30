@@ -6,10 +6,17 @@ use App\Controllers\BaseController;
 use App\Libraries\CIAuth;
 use App\Models\LoginModel;
 use App\Libraries\Hash;
+use App\Models\Category;
+use SSP;
 
 class AdminController extends BaseController
 {
     protected $helpers = ['url', 'form', 'CIMail', 'CIFunctions'];
+    protected $db;
+    public function __construct() {
+        require_once APPPATH.'ThirdParty/ssp.php';
+        $this->db = db_connect();
+    }
     public function index()
     {
         $data = [
@@ -147,4 +154,77 @@ class AdminController extends BaseController
             }
         }
     }
+    public function categories() {
+        $data = [
+            'pageTitle'=>'Categorías'
+        ];
+        return view('backend/pages/categories', $data);
+    }
+    
+    public function addCategory() {
+        $request = \Config\Services::request();
+
+        if($request->isAJAX()) {
+            $validation = \Config\Services::validation();
+            $this->validate([
+                'category_name'=> [
+                    'rules' => 'required|is_unique[category_info.category]',
+                    'errors' => [
+                        'required'=>'Se requiere una categoría.',
+                        'is_unique'=>'El nombre de esta categoría ya existe.'
+                    ]
+                    ]
+            ]);
+            if ($validation->run() === FALSE) {
+                $errors = $validation->getErrors();
+                return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'error'=> $errors]);
+            } else {
+                
+                $category = new Category();
+                $save = $category->save(['category'=>$request->getVar('category_name')]);
+                if ($save) { 
+                    return $this->response->setJSON(['status'=> 1, 'token'=> csrf_hash(), 'msg'=>'Categoría añadida con éxito.']);
+                } else {
+                    return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'msg'=> 'Ha habido algún error. Por favor, inténtalo de nuevo.']);
+                }
+            }
+        }
+    }
+
+    public function getCategories() {
+        // detalles de la base de datos
+        $dbDetails = array(
+            "host"=>$this->db->hostname,
+            "user"=>$this->db->username,
+            "pass"=>$this->db->password,
+            "db"=> $this->db->database
+        );
+        $table = "category_info";
+        $primaryKey = "id";
+        $columns = array (
+            array (
+                "db"=>"id",
+                "dt"=>0
+            ),
+            array(
+                "db"=>"category",
+                "dt"=>1
+            ),
+            array(
+                "db"=>"id",
+                "dt"=>2,
+                "formatter"=>function($d, $row){
+                    return "<div class='btn-group'>
+                    <button class='btn btn-sm btn-link p-0 mx-1 editCategoryBtn' data-id='".$row['id']."'>Editar</button>
+                    <button class='btn btn-sm btn-link p-0 mx-1 deleteCategoryBtn' data-id='".$row['id']."'>Borrar</button>
+                    </div>";
+                }
+            ),
+        );
+        return json_encode(
+            SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
+        );
+    }
 }
+
+    

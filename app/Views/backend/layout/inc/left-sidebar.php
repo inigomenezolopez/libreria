@@ -22,7 +22,7 @@
 							</a>
 						</li>
 						<li>
-							<a href="" class="dropdown-toggle no-arrow">
+							<a href="<?= base_url(route_to('categories')); ?>" class="dropdown-toggle no-arrow">
 								<span class="micon dw dw-list"></span
 								><span class="mtext">Categorías</span>
 							</a>
@@ -58,18 +58,7 @@
 									</span>
 							</a>
 						</li>
-						<li>
-							<a
-								href=""
-								
-								class="dropdown-toggle no-arrow"
-							>
-								<span class="micon dw dw-settings"></span>
-								<span class="mtext"
-									>General
-									</span>
-							</a>
-						</li>
+						
 					</ul>
 				</div>
 			</div>
