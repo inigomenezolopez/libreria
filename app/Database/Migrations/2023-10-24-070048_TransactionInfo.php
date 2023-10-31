@@ -23,7 +23,7 @@ class TransactionInfo extends Migration
                 "constraint"=>"255",
             ],
             "price"=> [
-                "type"=>"INT",
+                "type"=>"FLOAT",
             ],
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'

@@ -38,6 +38,7 @@ $routes->group('/admin', static function($routes){
         
         $routes->group('comics', static function($routes){
             $routes->get('new-comic','AdminController::addComic', ['as'=> 'new-comic']);
+            $routes->post('create-comic','AdminController::createComic', ['as'=> 'create-comic']);
         });
    
     });

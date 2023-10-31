@@ -18,12 +18,17 @@ class ComicInfo extends Migration
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
             ],
+            "picture"=> [
+                "type"=> "VARCHAR",
+                "constraint"=>"255",
+                "null" => true,
+            ],
             "year"=> [
                 "type"=>"INT",
                 
             ],
             "price"=> [
-                "type"=>"INT",
+                "type"=>"FLOAT",
             ],
             "category"=> [
                 "type"=>"VARCHAR",

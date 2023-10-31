@@ -8,6 +8,7 @@ use App\Models\LoginModel;
 use App\Libraries\Hash;
 use App\Models\Category;
 use SSP;
+use App\Models\Comic;
 
 class AdminController extends BaseController
 {
@@ -284,6 +285,116 @@ class AdminController extends BaseController
                 return $this->response->setJSON(['status' => 1, 'msg' => 'Categoría eliminada correctamente.']);
             } else {
                 return $this->response->setJSON(['status' => 0, 'msg' => 'Ha ocurrido un error inesperado.']);
+            }
+        }
+    }
+
+    public function addComic()
+    {
+        $category = new Category();
+        $data = [
+            'pageTitle' => 'Añadir nuevo cómic',
+            'categories' => $category->asObject()->findAll()
+        ];
+        return view('backend/pages/new-comic', $data);
+    }
+
+    public function createComic()
+    {
+        $request = \Config\Services::request();
+        if ($request->isAJAX()) {
+            $validation = \Config\Services::validation();
+
+            $this->validate([
+                'title' => [
+                    'rules' => 'required|is_unique[comic_info.title]',
+                    'errors' => [
+                        'required' => 'Se necesita un título.',
+                        'is_unique' => 'Hay otro cómic con el mismo título'
+                    ]
+                ],
+                'price' => [
+                    'rules' => 'required|numeric|greater_than[0]',
+                    'errors' => [
+                        'required' => 'Tienes que poner un precio.',
+                        'numeric' => 'Tiene que ser un número.',
+                        'greater_than' => 'El precio tiene que ser mayor que 0.'
+                    ]
+                ],
+                'year' => [
+                    'rules' => 'required|numeric|greater_than[1900]',
+                    'errors' => [
+                        'required' => 'Tienes que poner el año de salida.',
+                        'numeric' => 'Tiene que ser un número',
+                        'greater_than' => 'Tiene que ser un cómic publicado como mínimo en el año 1900.',
+                    ]
+                ],
+                'content' => [
+                    'rules' => 'required|min_length[20]',
+                    'errors' => [
+                        'required' => 'Se necesita una descripción del cómic',
+                        'min_length' => 'Tienes que escribir al menos 20 caracteres.'
+                    ]
+                ],
+                'category' => [
+                    'rules' => 'required',
+                    'errors' => [
+                        'required' => 'Tienes que escoger una categoría.'
+                    ]
+                ],
+                'featured_image' => [
+                    'rules' => 'uploaded[featured_image]|is_image[featured_image]',
+                    'errors' => [
+                        'uploaded' => 'Se necesita una imagen.',
+                        'is_image' => 'Selecciona un tipo de imagen.'
+                    ]
+                ],
+            ]);
+
+            if ($validation->run() === FALSE) {
+                $errors = $validation->getErrors();
+                return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'error' => $errors]);
+            } else {
+                $path = 'images/comics';
+                $file = $request->getFile('featured_image');
+                $filename = $file->getRandomName();
+
+                
+
+                // subir la imagen de portada
+                if ($file->move($path, $filename)) {
+                    // Obtener la nueva ruta al archivo
+                    $newFilePath = $path . '/' . $filename;
+                
+                    // Redimensionar la imagen
+                    \Config\Services::image()
+                        ->withFile($newFilePath)
+                        ->resize(300, 417, true, 'height')
+                        ->save($path .'/'. $filename);
+
+                    // guardar los detalles del comic
+                    $comic = new Comic();
+
+                    $data = array(
+
+                        'title' => $request->getVar('title'),
+                        'price' => $request->getVar('price'),
+                        'year' =>  $request->getVar('year'),
+                        'description' => $request->getVar('content'),
+                        'category' => $request->getVar('category'),
+                        'picture' => $filename,
+
+                    );
+                    $save = $comic->insert($data);
+
+                    if ($save) {
+                        return $this->response->setJSON(['status' => 1, 'token' => csrf_hash(), 'msg' => 'Cómic añadido correctamente.']);
+                    } else {
+                        return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'msg' => 'Algo ocurrió mal. Inténtalo de nuevo.']);
+                    }
+                } else {
+                    return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'msg' => 'Error al subir la portada.']);
+                }
             }
         }
     }
