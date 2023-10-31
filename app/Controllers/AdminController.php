@@ -225,6 +225,48 @@ class AdminController extends BaseController
             SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
         );
     }
+
+    public function getCategory() {
+        $request = \Config\Services::request();
+
+        if($request->isAJAX()){
+            $id = $request->getVar('category_id');
+            $category = new Category();
+            $category_data = $category->find($id);
+            return $this->response->setJSON(['data'=>$category_data]);
+        }
+    }
+
+    public function updateCategory() {
+        $request = \Config\Services::request();
+        if($request->isAJAX()){
+            $id = $request->getVar('category_id');
+            $validation = \Config\Services::validation();
+
+            $this->validate([
+                'category_name'=>[
+                    'rules'=>'required|is_unique[category_info.category,id,'.$id.']',
+                    'errors' => [
+                        'required'=> 'Se requiere una categoría.',
+                        'is_unique'=>'La categoría ya existe en la base de datos.'
+                    ]
+                ]
+            ]);
+
+            if ($validation->run() === FALSE ){
+                $errors = $validation->getErrors();
+                return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'error'=> $errors]);
+            } else {
+                $category = new Category();
+                $update = $category->where('id', $id)->set(['category'=>$request->getVar('category_name')])->update();
+                if ($update) {
+                    return $this->response->setJSON(['status'=> 1,'token'=> csrf_hash(),'msg'=> 'Categoría actualizada correctamente.']);
+                } else {
+                    return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'msg'=> 'Ha ocurrido un error. Inténtalo de nuevo.']);
+                }
+            }
+        }
+    }
 }
 
     

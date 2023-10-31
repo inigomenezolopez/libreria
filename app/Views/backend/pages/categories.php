@@ -55,6 +55,7 @@
 </div>
 
 <?php include('modals/category-modal-form.php') ?>
+<?php include('modals/edit-category-modal-form.php') ?>
 
 <?= $this->endSection() ?>
 
@@ -141,5 +142,66 @@
         order:[[2, 'asc']]
 
     });
+
+    $(document).on('click', '.editCategoryBtn', function(e) {
+        e.preventDefault();
+        var category_id = $(this).data('id');
+        var url = "<?= base_url(route_to('get-category'))?>";
+        $.get(url, {category_id:category_id}, function(response){
+            var modal_title = 'Editar categoría';
+            var modal_btn_text = 'Guardar cambios';
+            var modal = $('body').find('div#edit-category-modal');
+            modal.find('form').find('input[type="hidden"][name="category_id"]').val(category_id);
+            modal.find('.modal-title').html(modal_title);
+            modal.find('.modal-footer > button.action').html(modal_btn_text);
+            modal.find('input[type="text"]').val(response.data.category);
+            modal.find('span.error-text').html('');
+            modal.modal('show');
+        }, 'json');
+    });
+
+    $('#update_category_form').on('submit', function(e) {
+        e.preventDefault();
+        // csrf
+        var csrfName = $('.ci_csrf_data').attr('name'); // csrf token name
+        var csrfHash = $('.ci_csrf_data').val(); // csrf hash
+        var form = this;
+        var modal = $('body').find('div#edit-category-modal');
+        var formdata = new FormData(form);
+        formdata.append(csrfName, csrfHash);
+      
+        $.ajax({
+            url:$(form).attr('action'),
+            method:$(form).attr('method'),
+            data:formdata,
+            processData:false,
+            dataType:'json',
+            contentType:false,
+            cache:false,
+            beforeSend:function(){
+                toastr.remove();
+                $(form).find('span.error-text').text('');
+            },
+            success:function(response) {
+                // update csrf hash
+                $('.ci_csrf_data').val(response.token);
+
+                if ($.isEmptyObject(response.error)) {
+                    if (response.status == 1) {
+                        modal.modal('hide');
+                        toastr.success(response.msg);
+                        categories_DT.ajax.reload(null, false);
+                    } else {
+                        toastr.error(response.msg);
+                    }
+                } else {
+                    $.each(response.error, function(prefix, val) {
+                        $(form).find('span.'+prefix+'_error').text(val);
+                    });
+                }
+            }
+        });
+
+   });
 </script>
 <?= $this->endSection() ?>
