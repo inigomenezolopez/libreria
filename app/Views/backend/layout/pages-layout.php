@@ -23,6 +23,12 @@
 	<link rel="stylesheet" href="/libreria/public/extra-assets/ijabo/ijabo.min.css">
 	<link rel="stylesheet" href="/libreria/public/extra-assets/ijaboCropTool/ijaboCropTool.min.css">
 	<?= $this->renderSection('stylesheets') ?>
+	<style>
+		.swal2-popup{
+			font-size: .87em;
+			
+		}
+	</style>
 </head>
 
 <body>

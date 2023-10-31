@@ -13,8 +13,9 @@ class AdminController extends BaseController
 {
     protected $helpers = ['url', 'form', 'CIMail', 'CIFunctions'];
     protected $db;
-    public function __construct() {
-        require_once APPPATH.'ThirdParty/ssp.php';
+    public function __construct()
+    {
+        require_once APPPATH . 'ThirdParty/ssp.php';
         $this->db = db_connect();
     }
     public function index()
@@ -146,77 +147,78 @@ class AdminController extends BaseController
             } else {
                 // actualizar contraseña del usuario (admin) en la BBDD
                 $user->where('id', $user_info->id)->set(['password' => Hash::make($request->getVar('new_password'))])->update();
-                
-                
-                return $this->response->setJSON(['status'=> 1, 'token' => csrf_hash(), 'msg' => 'Hecho.']);
 
-                
+
+                return $this->response->setJSON(['status' => 1, 'token' => csrf_hash(), 'msg' => 'Hecho.']);
             }
         }
     }
-    public function categories() {
+    public function categories()
+    {
         $data = [
-            'pageTitle'=>'Categorías'
+            'pageTitle' => 'Categorías'
         ];
         return view('backend/pages/categories', $data);
     }
-    
-    public function addCategory() {
+
+    public function addCategory()
+    {
         $request = \Config\Services::request();
 
-        if($request->isAJAX()) {
+        if ($request->isAJAX()) {
             $validation = \Config\Services::validation();
             $this->validate([
-                'category_name'=> [
+                'category_name' => [
                     'rules' => 'required|is_unique[category_info.category]',
                     'errors' => [
-                        'required'=>'Se requiere una categoría.',
-                        'is_unique'=>'El nombre de esta categoría ya existe.'
+                        'required' => 'Se requiere una categoría.',
+                        'is_unique' => 'El nombre de esta categoría ya existe.'
                     ]
-                    ]
+                ]
             ]);
             if ($validation->run() === FALSE) {
                 $errors = $validation->getErrors();
-                return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'error'=> $errors]);
+                return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'error' => $errors]);
             } else {
-                
+
                 $category = new Category();
-                $save = $category->save(['category'=>$request->getVar('category_name')]);
-                if ($save) { 
-                    return $this->response->setJSON(['status'=> 1, 'token'=> csrf_hash(), 'msg'=>'Categoría añadida con éxito.']);
+                $save = $category->save(['category' => $request->getVar('category_name')]);
+                if ($save) {
+                    return $this->response->setJSON(['status' => 1, 'token' => csrf_hash(), 'msg' => 'Categoría añadida con éxito.']);
                 } else {
-                    return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'msg'=> 'Ha habido algún error. Por favor, inténtalo de nuevo.']);
+                    return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'msg' => 'Ha habido algún error. Por favor, inténtalo de nuevo.']);
                 }
             }
         }
     }
 
-    public function getCategories() {
+    public function getCategories()
+    {
         // detalles de la base de datos
         $dbDetails = array(
-            "host"=>$this->db->hostname,
-            "user"=>$this->db->username,
-            "pass"=>$this->db->password,
-            "db"=> $this->db->database
+            "host" => $this->db->hostname,
+            "user" => $this->db->username,
+            "pass" => $this->db->password,
+            "db" => $this->db->database
         );
         $table = "category_info";
         $primaryKey = "id";
-        $columns = array (
-            array (
-                "db"=>"id",
-                "dt"=>0
+        $columns = array(
+            array(
+                "db" => "id",
+                "dt" => 0
             ),
             array(
-                "db"=>"category",
-                "dt"=>1
+                "db" => "category",
+                "dt" => 1
             ),
             array(
-                "db"=>"id",
-                "dt"=>2,
-                "formatter"=>function($d, $row){
+                "db" => "id",
+                "dt" => 2,
+                "formatter" => function ($d, $row) {
                     return "<div class='btn-group'>
-                    <button class='btn btn-sm btn-link p-0 mx-1 editCategoryBtn' data-id='".$row['id']."'>Editar</button>
-                    <button class='btn btn-sm btn-link p-0 mx-1 deleteCategoryBtn' data-id='".$row['id']."'>Borrar</button>
+                    <button class='btn btn-sm btn-link p-0 mx-1 editCategoryBtn' data-id='" . $row['id'] . "'>Editar</button>
+                    <button class='btn btn-sm btn-link p-0 mx-1 deleteCategoryBtn' data-id='" . $row['id'] . "'>Borrar</button>
                     </div>";
                 }
             ),
@@ -226,47 +228,63 @@ class AdminController extends BaseController
         );
     }
 
-    public function getCategory() {
+    public function getCategory()
+    {
         $request = \Config\Services::request();
 
-        if($request->isAJAX()){
+        if ($request->isAJAX()) {
             $id = $request->getVar('category_id');
             $category = new Category();
             $category_data = $category->find($id);
-            return $this->response->setJSON(['data'=>$category_data]);
+            return $this->response->setJSON(['data' => $category_data]);
         }
     }
 
-    public function updateCategory() {
+    public function updateCategory()
+    {
         $request = \Config\Services::request();
-        if($request->isAJAX()){
+        if ($request->isAJAX()) {
             $id = $request->getVar('category_id');
             $validation = \Config\Services::validation();
 
             $this->validate([
-                'category_name'=>[
-                    'rules'=>'required|is_unique[category_info.category,id,'.$id.']',
+                'category_name' => [
+                    'rules' => 'required|is_unique[category_info.category,id,' . $id . ']',
                     'errors' => [
-                        'required'=> 'Se requiere una categoría.',
-                        'is_unique'=>'La categoría ya existe en la base de datos.'
+                        'required' => 'Se requiere una categoría.',
+                        'is_unique' => 'La categoría ya existe en la base de datos.'
                     ]
                 ]
             ]);
 
-            if ($validation->run() === FALSE ){
+            if ($validation->run() === FALSE) {
                 $errors = $validation->getErrors();
-                return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'error'=> $errors]);
+                return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'error' => $errors]);
             } else {
                 $category = new Category();
-                $update = $category->where('id', $id)->set(['category'=>$request->getVar('category_name')])->update();
+                $update = $category->where('id', $id)->set(['category' => $request->getVar('category_name')])->update();
                 if ($update) {
-                    return $this->response->setJSON(['status'=> 1,'token'=> csrf_hash(),'msg'=> 'Categoría actualizada correctamente.']);
+                    return $this->response->setJSON(['status' => 1, 'token' => csrf_hash(), 'msg' => 'Categoría actualizada correctamente.']);
                 } else {
-                    return $this->response->setJSON(['status'=> 0,'token'=> csrf_hash(),'msg'=> 'Ha ocurrido un error. Inténtalo de nuevo.']);
+                    return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'msg' => 'Ha ocurrido un error. Inténtalo de nuevo.']);
                 }
             }
         }
     }
-}
 
-    
+    public function deleteCategory()
+    {
+        $request = \Config\Services::request();
+        if ($request->isAJAX()) {
+            $id = $request->getVar('category_id');
+            $category = new Category();
+            $delete = $category->where('id', $id)->delete();
+
+            if ($delete) {
+                return $this->response->setJSON(['status' => 1, 'msg' => 'Categoría eliminada correctamente.']);
+            } else {
+                return $this->response->setJSON(['status' => 0, 'msg' => 'Ha ocurrido un error inesperado.']);
+            }
+        }
+    }
+}

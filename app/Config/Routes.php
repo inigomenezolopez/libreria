@@ -34,6 +34,12 @@ $routes->group('/admin', static function($routes){
         $routes->get('get-categories','AdminController::getCategories', ['as'=> 'get-categories']);
         $routes->get('get-category','AdminController::getCategory', ['as'=> 'get-category']);
         $routes->post('update-category','AdminController::updateCategory', ['as'=> 'update-category']);
+        $routes->get('delete-category','AdminController::deleteCategory', ['as'=> 'delete-category']);
+        
+        $routes->group('comics', static function($routes){
+            $routes->get('new-comic','AdminController::addComic', ['as'=> 'new-comic']);
+        });
+   
     });
 
     $routes->group('', ['filter'=>'cifilter:guest'], static function($routes){

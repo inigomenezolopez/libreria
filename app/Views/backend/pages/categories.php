@@ -37,7 +37,8 @@
                 </div>
             </div>
             <div class="card-body">
-                <table class="table table-sm table-borderless table-hover table-striped" id="categories-table">
+                 <div class="table-responsive"> 
+                <table class="table table-sm table-borderless table-hover table-striped w-100" id="categories-table">
                     <thead>
                         <tr>
                             <th scope="col">#</th>
@@ -48,6 +49,7 @@
                     </thead>
                     <tbody></tbody>
                 </table>
+</div>
             </div>
         </div>
     </div>
@@ -135,19 +137,24 @@
         fnCreatedRow: function(row, data, index) {
             $('td', row).eq(0).html(index + 1);
         },
-        columnDefs:[
-            {targets:[0,1,2]},
-            
+        columnDefs: [{
+                targets: [0, 1, 2]
+            },
+
         ],
-        order:[[2, 'asc']]
+        order: [
+            [2, 'asc']
+        ]
 
     });
 
     $(document).on('click', '.editCategoryBtn', function(e) {
         e.preventDefault();
         var category_id = $(this).data('id');
-        var url = "<?= base_url(route_to('get-category'))?>";
-        $.get(url, {category_id:category_id}, function(response){
+        var url = "<?= base_url(route_to('get-category')) ?>";
+        $.get(url, {
+            category_id: category_id
+        }, function(response) {
             var modal_title = 'Editar categoría';
             var modal_btn_text = 'Guardar cambios';
             var modal = $('body').find('div#edit-category-modal');
@@ -169,20 +176,20 @@
         var modal = $('body').find('div#edit-category-modal');
         var formdata = new FormData(form);
         formdata.append(csrfName, csrfHash);
-      
+
         $.ajax({
-            url:$(form).attr('action'),
-            method:$(form).attr('method'),
-            data:formdata,
-            processData:false,
-            dataType:'json',
-            contentType:false,
-            cache:false,
-            beforeSend:function(){
+            url: $(form).attr('action'),
+            method: $(form).attr('method'),
+            data: formdata,
+            processData: false,
+            dataType: 'json',
+            contentType: false,
+            cache: false,
+            beforeSend: function() {
                 toastr.remove();
                 $(form).find('span.error-text').text('');
             },
-            success:function(response) {
+            success: function(response) {
                 // update csrf hash
                 $('.ci_csrf_data').val(response.token);
 
@@ -196,12 +203,41 @@
                     }
                 } else {
                     $.each(response.error, function(prefix, val) {
-                        $(form).find('span.'+prefix+'_error').text(val);
+                        $(form).find('span.' + prefix + '_error').text(val);
                     });
                 }
             }
         });
 
-   });
+    });
+
+    $(document).on('click', '.deleteCategoryBtn', function(e){
+        e.preventDefault();
+        var category_id = $(this).data('id');
+        var url = "<?= base_url(route_to('delete-category')) ?>";
+        swal.fire({
+            title: '¿Estás seguro?',
+            html: 'Quieres eliminar esta categoría.',
+            showCloseButton:true,
+            showCancelButton:true,
+            cancelButtonText:'Cancelar',
+            confirmButtonText: 'Sí, por favor',
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            width:300,
+            allowOutsideClick:false
+        }).then(function(result) {
+            if(result.value) {
+                $.get(url, {category_id:category_id}, function(response){
+                    if (response.status == 1){
+                        categories_DT.ajax.reload(null, false);
+                        toastr.success(response.msg);
+                    } else {
+                        toastr.error(response.msg);
+                    }
+                }, 'json');
+            }
+        });
+    });
 </script>
 <?= $this->endSection() ?>
