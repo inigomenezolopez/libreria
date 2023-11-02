@@ -35,6 +35,11 @@ $routes->group('/admin', static function($routes){
         $routes->get('get-category','AdminController::getCategory', ['as'=> 'get-category']);
         $routes->post('update-category','AdminController::updateCategory', ['as'=> 'update-category']);
         $routes->get('delete-category','AdminController::deleteCategory', ['as'=> 'delete-category']);
+
+        $routes->get('trans-info','AdminController::transInfo', ['as'=> 'trans-info']);
+        $routes->get('get-trans-info','AdminController::getTransInfo', ['as'=> 'get-trans-info']);
+        $routes->get('user-info','AdminController::userInfo', ['as'=> 'user-info']);
+        $routes->get('get-user-info','AdminController::getUserInfo', ['as'=> 'get-user-info']);
         
         $routes->group('comics', static function($routes){
             $routes->get('new-comic','AdminController::addComic', ['as'=> 'new-comic']);

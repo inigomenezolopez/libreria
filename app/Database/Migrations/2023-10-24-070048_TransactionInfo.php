@@ -14,7 +14,7 @@ class TransactionInfo extends Migration
                 "unsigned"=>true,
                 "auto_increment"=> true,
             ],
-            "name" => [
+            "email" => [
                 "type"=> "VARCHAR",
                 "constraint"=>"255",
             ],
@@ -30,10 +30,10 @@ class TransactionInfo extends Migration
         ]);
         
         $this->forge->addkey('id', true);
-        $this->forge->addkey('name');
+        $this->forge->addkey('email');
         $this->forge->addkey('title');
         $this->forge->addkey('price');
-        $this->forge->addForeignKey('name','userdata','name','CASCADE','CASCADE');
+        $this->forge->addForeignKey('email','userdata','email','CASCADE','CASCADE');
         $this->forge->addForeignKey('title','comic_info','title','CASCADE','CASCADE');
         $this->forge->addForeignKey('price','comic_info','price','CASCADE','CASCADE');
         $this->forge->createTable('trans_info');

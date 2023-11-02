@@ -37,7 +37,18 @@
 								<li><a href="<?= base_url(route_to('new-comic'))?>">Añadir nuevo</a></li>
 							</ul>
 						</li>
-						
+						<li>
+							<a href="<?= base_url(route_to('trans-info')); ?>" class="dropdown-toggle no-arrow">
+								<span class="micon dw dw-shopping-bag"></span>
+								<span class="mtext">Transacciones</span>
+							</a>
+						</li>
+						<li>
+							<a href="<?= base_url(route_to('user-info')); ?>" class="dropdown-toggle no-arrow">
+								<span class="micon dw dw-user-2"></span
+								><span class="mtext">Usuarios</span>
+							</a>
+						</li>
 					
 						<li>
 							<div class="dropdown-divider"></div>

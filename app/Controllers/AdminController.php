@@ -9,6 +9,7 @@ use App\Libraries\Hash;
 use App\Models\Category;
 use SSP;
 use App\Models\Comic;
+use App\Models\TransInfo;
 
 class AdminController extends BaseController
 {
@@ -481,6 +482,133 @@ class AdminController extends BaseController
                     </div>";
                 }
             ),
+        );
+        return json_encode(
+            SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
+        );
+    }
+
+    public function transInfo() {
+        $data = [
+            'pageTitle' => 'Historial de transacciones'
+        ];
+        return view('backend/pages/transinfo', $data);
+    }
+
+    public function getTransInfo(){
+        // detalles de la base de datos
+        $dbDetails = array(
+            "host" => $this->db->hostname,
+            "user" => $this->db->username,
+            "pass" => $this->db->password,
+            "db" => $this->db->database
+        );
+        $table = "trans_info"; // poner el nombre de mi tabla
+        $primaryKey = "id";
+        $columns = array(
+            array(
+                "db"=>"id",
+                "dt"=>0,
+            ),
+            array(
+                "db"=>"id",
+                "dt"=>1,
+                "formatter"=>function($d, $row) {
+                    $trans = new TransInfo;
+                    $email = $trans->asObject()->find($row['id'])->email;
+                    return $email;
+
+                }
+            ),
+            array(
+                "db"=> "title",
+                "dt"=>2,
+                "formatter"=>function($d, $row) {
+                    $trans = new TransInfo;
+                    $title = $trans->asObject()->find($row['id'])->title;
+                    return $title;
+                }
+            ),
+            array(
+                "db"=> "price",
+                "dt"=>3,
+                "formatter"=>function($d, $row) {
+                    $price = new TransInfo;
+                    $price_id = $price->asObject()->find($row["id"])->price;
+                    return $price_id;
+                }
+            ),
+            array(
+                "db"=> "created_at",
+                "dt"=>4,
+                "formatter"=>function($d, $row) {
+                    $trans = new TransInfo;
+                    $created_at = $trans->asObject()->find($row['id'])->created_at;
+                    // Formatear la fecha al formato deseado (día, mes, año)
+                    $date = date("d-m-Y", strtotime($created_at));
+                    return $date;
+                }
+            )
+            
+        );
+        return json_encode(
+            SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
+        );
+    }
+
+    public function userInfo(){
+        $data = [
+            'pageTitle' => 'Lista de usuarios'
+        ];
+        return view('backend/pages/userinfo', $data);
+    }
+
+    public function getUserInfo() {
+        // detalles de la base de datos
+        $dbDetails = array(
+            "host" => $this->db->hostname,
+            "user" => $this->db->username,
+            "pass" => $this->db->password,
+            "db" => $this->db->database
+        );
+        $table = "userdata"; // poner el nombre de mi tabla
+        $primaryKey = "id";
+        $columns = array(
+            array(
+                "db"=>"id",
+                "dt"=>0,
+            ),
+            array(
+                "db"=>"id",
+                "dt"=>1,
+                "formatter"=>function($d, $row) {
+                    $user = new LoginModel;
+                    $name = $user->asObject()->find($row['id'])->name;
+                    return $name;
+
+                }
+            ),
+            array(
+                "db"=> "email",
+                "dt"=>2,
+                "formatter"=>function($d, $row) {
+                    $user = new LoginModel;
+                    $email = $user->asObject()->find($row['id'])->email;
+                    return $email;
+                }
+            ),
+            array(
+                "db"=> "created_at",
+                "dt"=>3,
+                "formatter"=>function($d, $row) {
+                    $user = new LoginModel;
+                    $created_at = $user->asObject()->find($row['id'])->created_at;
+                    // Formatear la fecha al formato deseado (día, mes, año)
+                    $date = date("d-m-Y", strtotime($created_at));
+                    return $date;
+                }
+            ),
+            
         );
         return json_encode(
             SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
