@@ -33,9 +33,9 @@ class TransactionInfo extends Migration
         $this->forge->addkey('email');
         $this->forge->addkey('title');
         $this->forge->addkey('price');
-        $this->forge->addForeignKey('email','userdata','email','CASCADE','CASCADE');
-        $this->forge->addForeignKey('title','comic_info','title','CASCADE','CASCADE');
-        $this->forge->addForeignKey('price','comic_info','price','CASCADE','CASCADE');
+        $this->forge->addForeignKey('email','userdata','email','NO ACTION','NO ACTION');
+        $this->forge->addForeignKey('title','comic_info','title','NO ACTION','NO ACTION');
+        $this->forge->addForeignKey('price','comic_info','price','NO ACTION','NO ACTION');
         $this->forge->createTable('trans_info');
         
         }
