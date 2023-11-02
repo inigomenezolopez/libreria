@@ -22,11 +22,37 @@ class AdminController extends BaseController
     }
     public function index()
     {
+        $category = new Category();
+        $transInfo = new TransInfo();
+        $comic = new Comic();
+        $user = new LoginModel();
+        $db = \Config\Database::connect();
+
+        //total de transacciones
+        $query = $db->table('trans_info')->selectSum('price', 'total');
+        $result = $query->get()->getResult();
+        $total_earnings = round($result[0]->total, 2);
+
+        // comics por categorías
+        $builder = $db->table('comic_info');
+        $builder->select('category, COUNT(*) as num_comics');
+        $builder->groupBy('category');
+        $query = $builder->get();
+
+        
+
+
+        
         $data = [
             'pageTitle' => 'Dashboard',
+            'num_categories'=> $category->countAll(),
+            'total_earnings' => $total_earnings,
+            'comics_by_category' => $query->getResultArray(),
+            'users' => $user->findAll()
         ];
         return view('backend/pages/home', $data);
     }
+    
 
     public function logoutHandler()
     {
