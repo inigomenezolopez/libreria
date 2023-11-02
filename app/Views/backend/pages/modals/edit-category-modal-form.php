@@ -23,7 +23,7 @@
                     Cerrar
                 </button>
                 <button type="submit" class="btn btn-primary action">
-                    Save changes
+                    Guardar cambios
                 </button>
             </div>
         </form>

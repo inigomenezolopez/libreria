@@ -18,7 +18,7 @@
             </nav>
         </div>
         <div class="col-md-6 col-sm-12 text-right">
-            <a href="" class="btn btn-primary">Ver todos los cómics</a>
+            <a href="<?= base_url(route_to('all-comics')) ?>" class="btn btn-primary">Ver todos los cómics</a>
         </div>
     </div>
 </div>
@@ -60,7 +60,7 @@
                         <select name="category" id="" class="custom-select form-control">
                             <option value="">Elige...</option>
                             <?php foreach ($categories as $category) : ?>
-                                <option value="<?= $category->id ?>"> <?= $category->category ?> </option>
+                                <option value="<?= $category->category ?>"> <?= $category->category ?> </option>
                             <?php endforeach ?>
                         </select>
                         <span class="text-danger error-text category_error"></span>

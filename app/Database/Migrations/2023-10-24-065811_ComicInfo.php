@@ -47,7 +47,7 @@ class ComicInfo extends Migration
         $this->forge->addkey('price');
         $this->forge->addkey('category');
         $this->forge->createTable('comic_info');
-        
+        $this->forge->addForeignKey('category','category_info','category','CASCADE','CASCADE');
         }
     
 

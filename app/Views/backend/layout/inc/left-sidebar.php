@@ -33,7 +33,7 @@
 								><span class="mtext">Cómics</span>
 							</a>
 							<ul class="submenu">
-								<li><a href="">Todos los cómics</a></li>
+								<li><a href="<?= base_url(route_to('all-comics')) ?>">Todos los cómics</a></li>
 								<li><a href="<?= base_url(route_to('new-comic'))?>">Añadir nuevo</a></li>
 							</ul>
 						</li>

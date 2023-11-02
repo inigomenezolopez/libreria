@@ -374,7 +374,6 @@ class AdminController extends BaseController
 
                     // guardar los detalles del comic
                     $comic = new Comic();
-
                     $data = array(
 
                         'title' => $request->getVar('title'),
@@ -397,5 +396,94 @@ class AdminController extends BaseController
                 }
             }
         }
+    }
+
+    public function allComics(){
+        $data = [
+            'pageTitle'=>'Todos los cómics'
+        ];
+        return view('backend/pages/all-comics', $data);
+    }
+
+    public function getComics(){
+        // detalles de la base de datos
+        $dbDetails = array(
+            "host" => $this->db->hostname,
+            "user" => $this->db->username,
+            "pass" => $this->db->password,
+            "db" => $this->db->database
+        );
+        $table = "comic_info"; // poner el nombre de mi tabla
+        $primaryKey = "id";
+        $columns = array(
+            array(
+                "db"=>"id",
+                "dt"=>0,
+            ),
+            array(
+                "db"=>"id",
+                "dt"=>1,
+                "formatter"=>function($d, $row) {
+                    $comic = new Comic();
+                    $image = $comic->asObject()->find($row['id'])->picture;
+                    return "<img src='".base_url("/images/comics/$image")."' class='img-thumbnail' style='max-width:70px'>";
+
+                }
+            ),
+            array(
+                "db"=> "title",
+                "dt"=>2,
+            ),
+            array(
+                "db"=> "id",
+                "dt"=>3,
+                "formatter"=>function($d, $row) {
+                    $comic = new Comic();
+                    $category_id = $comic->asObject()->find($row["id"])->category;
+                    return $category_id;
+                }
+            ),
+            array(
+                "db"=> "id",
+                "dt"=>4,
+                "formatter"=>function($d, $row) {
+                    $comic = new Comic();
+                    $price = $comic->asObject()->find($row["id"])->price;
+                    return $price;
+                }
+            ),
+            array(
+                "db"=> "id",
+                "dt"=>5,
+                "formatter"=>function($d, $row) {
+                    $comic = new Comic();
+                    $year = $comic->asObject()->find($row["id"])->year;
+                    return $year;
+                }
+            ),
+            array(
+                "db"=> "id",
+                "dt"=>6,
+                "formatter"=>function($d, $row) {
+                    $comic = new Comic();
+                    $description = $comic->asObject()->find($row["id"])->description;
+                    return $description;
+                }
+            ),
+            array(
+                "db" => "id",
+                "dt" => 7,
+                "formatter" => function ($d, $row) {
+                    return "<div class='btn-group'>
+                    <a href='' class='btn btn-sm btn-link p-0 mx-1'>Ver</button>
+                    <a href='' class='btn btn-sm btn-link p-0 mx-1'>Editar</button>
+                    <button class='btn btn-sm btn-link p-0 mx-1 deleteComicBtn' data-id='".$row['id']."'>Borrar</button>
+                    </div>";
+                }
+            ),
+        );
+        return json_encode(
+            SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
+        );
     }
 }
