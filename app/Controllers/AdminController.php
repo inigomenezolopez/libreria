@@ -503,7 +503,6 @@ class AdminController extends BaseController
                 "dt" => 7,
                 "formatter" => function ($d, $row) {
                     return "<div class='btn-group'>
-                    <a href='' class='btn btn-sm btn-link p-0 mx-1'>Ver</a>
                     <a href='" . base_url(route_to('edit-comic', $row['id'])) . "' class='btn btn-sm btn-link p-0 mx-1'>Editar</a>
                     <button class='btn btn-sm btn-link p-0 mx-1 deleteComicBtn' data-id='" . $row['id'] . "'>Borrar</button>
                     </div>";
@@ -711,7 +710,7 @@ class AdminController extends BaseController
                             'is_image' => 'Selecciona un tipo de imagen.'
                         ]
                     ],
-                    
+
 
 
                 ]);
@@ -756,74 +755,100 @@ class AdminController extends BaseController
                 ]);
             }
 
-            if  ($validation->run() === FALSE){
+            if ($validation->run() === FALSE) {
                 $errors = $validation->getErrors();
-                return $this->response->setJSON(['status'=>0, 'token'=> csrf_hash(), 'error'=>$errors ]);
+                return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'error' => $errors]);
             } else {
-               // return $this->response->setJSON(['status'=> 1, 'token'=> csrf_hash(), 'msg' => 'Validado.']);
-               if (isset($_FILES['featured_image']['name']) && !empty($_FILES['featured_image']['name'])) {
-                $path = 'images/comics';
-                $file = $request->getFile('featured_image');
-                $filename = $file->getRandomName();
-                $old_comic_featured_image = $comic->asObject()->find($comic_id)->picture;
-                
-                // actualizar imagen de portada
-                if ($file->move($path, $filename)) {
-                    
-                    // redimensionar imagen
-                    \Config\Services::image()
-                    ->withFile($path.'/'.$filename)
-                    ->resize(300, 417, true, 'height')
-                    ->save($path . '/' . $filename);
+                // return $this->response->setJSON(['status'=> 1, 'token'=> csrf_hash(), 'msg' => 'Validado.']);
+                if (isset($_FILES['featured_image']['name']) && !empty($_FILES['featured_image']['name'])) {
+                    $path = 'images/comics';
+                    $file = $request->getFile('featured_image');
+                    $filename = $file->getRandomName();
+                    $old_comic_featured_image = $comic->asObject()->find($comic_id)->picture;
 
-                    // borrar antigua imagen
+                    // actualizar imagen de portada
+                    if ($file->move($path, $filename)) {
 
-                    if ($old_comic_featured_image != null && file_exists($path.'/'.$old_comic_featured_image)) {
-                        unlink($path.'/'.$old_comic_featured_image);
+                        // redimensionar imagen
+                        \Config\Services::image()
+                            ->withFile($path . '/' . $filename)
+                            ->resize(300, 417, true, 'height')
+                            ->save($path . '/' . $filename);
+
+                        // borrar antigua imagen
+
+                        if ($old_comic_featured_image != null && file_exists($path . '/' . $old_comic_featured_image)) {
+                            unlink($path . '/' . $old_comic_featured_image);
+                        }
+
+                        if (file_exists($path . '/' . $old_comic_featured_image)) {
+                            unlink($path . '/' . $old_comic_featured_image);
+                        }
+
+                        // actualizar detalles del cómic
+
+                        $data = array(
+                            'title' => $request->getVar('title'),
+                            'category' => $request->getVar('category'),
+                            'description' => $request->getVar('content'),
+                            'picture' => $filename,
+                            'price' => $request->getVar('price'),
+                            'year' => $request->getVar('year'),
+                        );
+
+                        $update = $comic->update($comic_id, $data);
+
+                        if ($update) {
+                            return $this->response->setJSON(['status' => '1', 'token' => csrf_hash(), 'msg' => 'Cómic actualizado correctamente.']);
+                        } else {
+                            return $this->response->setJSON(['status' => '0', 'token' => csrf_hash(), 'msg' => 'Algo salió mal.']);
+                        }
+                    } else {
+                        return $this->response->setJSON(['status' => 0, 'token' => csrf_hash(), 'msg' => 'Ha ocurrido un error. No se ha podido guardar la imagen de portada.']);
                     }
-
-                    if (file_exists($path.'/'.$old_comic_featured_image)) {
-                        unlink($path.'/'.$old_comic_featured_image);
-                    }
-
-                    // actualizar detalles del cómic
-
+                } else {
+                    // actualizar detalles del comic sin actualizar imagen.
                     $data = array(
                         'title' => $request->getVar('title'),
                         'category' => $request->getVar('category'),
                         'description' => $request->getVar('content'),
-                        'picture'=>$filename,
                         'price' => $request->getVar('price'),
                         'year' => $request->getVar('year'),
                     );
-
                     $update = $comic->update($comic_id, $data);
-
-                    if ($update){
-                        return $this->response->setJSON(['status'=> '1','token'=> csrf_hash(), 'msg'=>'Cómic actualizado correctamente.']);
+                    if ($update) {
+                        return $this->response->setJSON(['status' => '1', 'token' => csrf_hash(), 'msg' => 'Cómic actualizado correctamente.']);
                     } else {
-                        return $this->response->setJSON(['status'=> '0', 'token'=> csrf_hash(), 'msg'=> 'Algo salió mal.']);
+                        return $this->response->setJSON(['status' => '0', 'token' => csrf_hash(), 'msg' => 'Algo salió mal.']);
                     }
-                } else {
-                    return $this->response->setJSON(['status'=>0, 'token'=> csrf_hash(), 'msg'=>'Ha ocurrido un error. No se ha podido guardar la imagen de portada.' ]);
                 }
-            } else {
-                // actualizar detalles del comic sin actualizar imagen.
-                $data = array (
-                    'title' => $request->getVar('title'),
-                        'category' => $request->getVar('category'),
-                        'description' => $request->getVar('content'),
-                        'price' => $request->getVar('price'),
-                        'year' => $request->getVar('year'),
-                );
-                $update = $comic->update($comic_id, $data);
-                if ($update){
-                    return $this->response->setJSON(['status'=> '1','token'=> csrf_hash(), 'msg'=>'Cómic actualizado correctamente.']);
-                } else {
-                    return $this->response->setJSON(['status'=> '0', 'token'=> csrf_hash(), 'msg'=> 'Algo salió mal.']);
-                }
-            }
             }
         };
+    }
+
+    public function deleteComic()
+    {
+        $request = \Config\Services::request();
+if ($request->isAJAX()) {
+    $id = $request->getVar('comic_id');
+    $comic = new Comic();
+    $comic_to_delete = $comic->find($id); // Encuentra el cómic que se va a eliminar
+
+    // Intenta eliminar la imagen del cómic del sistema de archivos
+    $image_path = 'images/comics' .'/'. $comic_to_delete['picture'];
+    if (file_exists($image_path)) {
+        unlink($image_path);
+    }
+
+    // Ahora borra el cómic de la base de datos
+    $delete = $comic->where('id', $id)->delete();
+
+    if ($delete) {
+        return $this->response->setJSON(['status' => 1, 'msg' => 'Cómic eliminado correctamente.']);
+    } else {
+        return $this->response->setJSON(['status' => 0, 'msg' => 'Ha ocurrido un error inesperado.']);
+    }
+}
+
     }
 }

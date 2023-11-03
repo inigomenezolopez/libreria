@@ -93,10 +93,35 @@
             {orderable:false, targets:[0, 1, 2, 3, 4, 5, 6, 7]}
         ]
     });
-
-</script>
-
-<script>
     
+    $(document).on('click', '.deleteComicBtn', function(e){
+    e.preventDefault();
+    var comic_id = $(this).data('id'); // Asegúrate de que cada botón tenga un atributo 'data-id' con el ID del cómic
+    var url = "<?= base_url(route_to('delete-comic')) ?>"; // Asegúrate de que esta ruta esté configurada correctamente
+    swal.fire({
+        title: '¿Estás seguro?',
+        html: 'Quieres eliminar este cómic.',
+        showCloseButton:true,
+        showCancelButton:true,
+        cancelButtonText:'Cancelar',
+        confirmButtonText: 'Sí, por favor',
+        cancelButtonColor: '#d33',
+        confirmButtonColor: '#3085d6',
+        width:300,
+        allowOutsideClick:false
+    }).then(function(result) {
+        if(result.value) {
+            $.get(url, {comic_id:comic_id}, function(response){ 
+                if (response.status == 1){
+                    posts_DT.ajax.reload(null, false); 
+                    toastr.success(response.msg);
+                } else {
+                    toastr.error(response.msg);
+                }
+            }, 'json');
+        }
+    });
+});
+
 </script>
 <?= $this->endSection() ?>
