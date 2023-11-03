@@ -502,8 +502,8 @@ class AdminController extends BaseController
                 "dt" => 7,
                 "formatter" => function ($d, $row) {
                     return "<div class='btn-group'>
-                    <a href='' class='btn btn-sm btn-link p-0 mx-1'>Ver</button>
-                    <a href='' class='btn btn-sm btn-link p-0 mx-1'>Editar</button>
+                    <a href='' class='btn btn-sm btn-link p-0 mx-1'>Ver</a>
+                    <a href='".base_url(route_to('edit-comic', $row['id']))."' class='btn btn-sm btn-link p-0 mx-1'>Editar</a>
                     <button class='btn btn-sm btn-link p-0 mx-1 deleteComicBtn' data-id='".$row['id']."'>Borrar</button>
                     </div>";
                 }
@@ -639,5 +639,16 @@ class AdminController extends BaseController
         return json_encode(
             SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
         );
+    }
+
+    public function editComic($id) {
+        $comic = new Comic();
+        $category = new Category();
+        $data = [
+            'pageTitle' => 'Editar cómic',
+            'comic' =>$comic->asObject()->find($id),
+            'category' => $category->asObject()->findAll(),
+        ];
+        return view('backend/pages/edit-comic', $data);
     }
 }
