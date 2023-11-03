@@ -47,6 +47,7 @@ $routes->group('/admin', static function($routes){
             $routes->get('/','AdminController::allComics', ['as'=> 'all-comics']);
             $routes->get('get-comics','AdminController::getComics', ['as'=> 'get-comics']);
             $routes->get('edit-comic/(:any)','AdminController::editComic/$1', ['as'=> 'edit-comic']);
+            $routes->post('update-comic', 'AdminController::updateComic', ['as'=> 'update-comic']);
         });
    
     });

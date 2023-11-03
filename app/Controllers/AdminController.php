@@ -39,20 +39,20 @@ class AdminController extends BaseController
         $builder->groupBy('category');
         $query = $builder->get();
 
-        
 
 
-        
+
+
         $data = [
             'pageTitle' => 'Dashboard',
-            'num_categories'=> $category->countAll(),
+            'num_categories' => $category->countAll(),
             'total_earnings' => $total_earnings,
             'comics_by_category' => $query->getResultArray(),
             'users' => $user->findAll()
         ];
         return view('backend/pages/home', $data);
     }
-    
+
 
     public function logoutHandler()
     {
@@ -386,18 +386,18 @@ class AdminController extends BaseController
                 $file = $request->getFile('featured_image');
                 $filename = $file->getRandomName();
 
-                
+
 
                 // subir la imagen de portada
                 if ($file->move($path, $filename)) {
                     // Obtener la nueva ruta al archivo
                     $newFilePath = $path . '/' . $filename;
-                
+
                     // Redimensionar la imagen
                     \Config\Services::image()
                         ->withFile($newFilePath)
                         ->resize(300, 417, true, 'height')
-                        ->save($path .'/'. $filename);
+                        ->save($path . '/' . $filename);
 
                     // guardar los detalles del comic
                     $comic = new Comic();
@@ -425,14 +425,16 @@ class AdminController extends BaseController
         }
     }
 
-    public function allComics(){
+    public function allComics()
+    {
         $data = [
-            'pageTitle'=>'Todos los cómics'
+            'pageTitle' => 'Todos los cómics'
         ];
         return view('backend/pages/all-comics', $data);
     }
 
-    public function getComics(){
+    public function getComics()
+    {
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -444,54 +446,53 @@ class AdminController extends BaseController
         $primaryKey = "id";
         $columns = array(
             array(
-                "db"=>"id",
-                "dt"=>0,
+                "db" => "id",
+                "dt" => 0,
             ),
             array(
-                "db"=>"id",
-                "dt"=>1,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 1,
+                "formatter" => function ($d, $row) {
                     $comic = new Comic();
                     $image = $comic->asObject()->find($row['id'])->picture;
-                    return "<img src='".base_url("/images/comics/$image")."' class='img-thumbnail' style='max-width:70px'>";
-
+                    return "<img src='" . base_url("/images/comics/$image") . "' class='img-thumbnail' style='max-width:70px'>";
                 }
             ),
             array(
-                "db"=> "title",
-                "dt"=>2,
+                "db" => "title",
+                "dt" => 2,
             ),
             array(
-                "db"=> "id",
-                "dt"=>3,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 3,
+                "formatter" => function ($d, $row) {
                     $comic = new Comic();
                     $category_id = $comic->asObject()->find($row["id"])->category;
                     return $category_id;
                 }
             ),
             array(
-                "db"=> "id",
-                "dt"=>4,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 4,
+                "formatter" => function ($d, $row) {
                     $comic = new Comic();
                     $price = $comic->asObject()->find($row["id"])->price;
                     return $price;
                 }
             ),
             array(
-                "db"=> "id",
-                "dt"=>5,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 5,
+                "formatter" => function ($d, $row) {
                     $comic = new Comic();
                     $year = $comic->asObject()->find($row["id"])->year;
                     return $year;
                 }
             ),
             array(
-                "db"=> "id",
-                "dt"=>6,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 6,
+                "formatter" => function ($d, $row) {
                     $comic = new Comic();
                     $description = $comic->asObject()->find($row["id"])->description;
                     return $description;
@@ -503,8 +504,8 @@ class AdminController extends BaseController
                 "formatter" => function ($d, $row) {
                     return "<div class='btn-group'>
                     <a href='' class='btn btn-sm btn-link p-0 mx-1'>Ver</a>
-                    <a href='".base_url(route_to('edit-comic', $row['id']))."' class='btn btn-sm btn-link p-0 mx-1'>Editar</a>
-                    <button class='btn btn-sm btn-link p-0 mx-1 deleteComicBtn' data-id='".$row['id']."'>Borrar</button>
+                    <a href='" . base_url(route_to('edit-comic', $row['id'])) . "' class='btn btn-sm btn-link p-0 mx-1'>Editar</a>
+                    <button class='btn btn-sm btn-link p-0 mx-1 deleteComicBtn' data-id='" . $row['id'] . "'>Borrar</button>
                     </div>";
                 }
             ),
@@ -514,14 +515,16 @@ class AdminController extends BaseController
         );
     }
 
-    public function transInfo() {
+    public function transInfo()
+    {
         $data = [
             'pageTitle' => 'Historial de transacciones'
         ];
         return view('backend/pages/transinfo', $data);
     }
 
-    public function getTransInfo(){
+    public function getTransInfo()
+    {
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -533,41 +536,40 @@ class AdminController extends BaseController
         $primaryKey = "id";
         $columns = array(
             array(
-                "db"=>"id",
-                "dt"=>0,
+                "db" => "id",
+                "dt" => 0,
             ),
             array(
-                "db"=>"id",
-                "dt"=>1,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 1,
+                "formatter" => function ($d, $row) {
                     $trans = new TransInfo;
                     $email = $trans->asObject()->find($row['id'])->email;
                     return $email;
-
                 }
             ),
             array(
-                "db"=> "title",
-                "dt"=>2,
-                "formatter"=>function($d, $row) {
+                "db" => "title",
+                "dt" => 2,
+                "formatter" => function ($d, $row) {
                     $trans = new TransInfo;
                     $title = $trans->asObject()->find($row['id'])->title;
                     return $title;
                 }
             ),
             array(
-                "db"=> "price",
-                "dt"=>3,
-                "formatter"=>function($d, $row) {
+                "db" => "price",
+                "dt" => 3,
+                "formatter" => function ($d, $row) {
                     $price = new TransInfo;
                     $price_id = $price->asObject()->find($row["id"])->price;
                     return $price_id;
                 }
             ),
             array(
-                "db"=> "created_at",
-                "dt"=>4,
-                "formatter"=>function($d, $row) {
+                "db" => "created_at",
+                "dt" => 4,
+                "formatter" => function ($d, $row) {
                     $trans = new TransInfo;
                     $created_at = $trans->asObject()->find($row['id'])->created_at;
                     // Formatear la fecha al formato deseado (día, mes, año)
@@ -575,21 +577,23 @@ class AdminController extends BaseController
                     return $date;
                 }
             )
-            
+
         );
         return json_encode(
             SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
         );
     }
 
-    public function userInfo(){
+    public function userInfo()
+    {
         $data = [
             'pageTitle' => 'Lista de usuarios'
         ];
         return view('backend/pages/userinfo', $data);
     }
 
-    public function getUserInfo() {
+    public function getUserInfo()
+    {
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -601,32 +605,31 @@ class AdminController extends BaseController
         $primaryKey = "id";
         $columns = array(
             array(
-                "db"=>"id",
-                "dt"=>0,
+                "db" => "id",
+                "dt" => 0,
             ),
             array(
-                "db"=>"id",
-                "dt"=>1,
-                "formatter"=>function($d, $row) {
+                "db" => "id",
+                "dt" => 1,
+                "formatter" => function ($d, $row) {
                     $user = new LoginModel;
                     $name = $user->asObject()->find($row['id'])->name;
                     return $name;
-
                 }
             ),
             array(
-                "db"=> "email",
-                "dt"=>2,
-                "formatter"=>function($d, $row) {
+                "db" => "email",
+                "dt" => 2,
+                "formatter" => function ($d, $row) {
                     $user = new LoginModel;
                     $email = $user->asObject()->find($row['id'])->email;
                     return $email;
                 }
             ),
             array(
-                "db"=> "created_at",
-                "dt"=>3,
-                "formatter"=>function($d, $row) {
+                "db" => "created_at",
+                "dt" => 3,
+                "formatter" => function ($d, $row) {
                     $user = new LoginModel;
                     $created_at = $user->asObject()->find($row['id'])->created_at;
                     // Formatear la fecha al formato deseado (día, mes, año)
@@ -634,21 +637,193 @@ class AdminController extends BaseController
                     return $date;
                 }
             ),
-            
+
         );
         return json_encode(
             SSP::simple($_GET, $dbDetails, $table, $primaryKey, $columns)
         );
     }
 
-    public function editComic($id) {
+    public function editComic($id)
+    {
         $comic = new Comic();
         $category = new Category();
         $data = [
             'pageTitle' => 'Editar cómic',
-            'comic' =>$comic->asObject()->find($id),
+            'comic' => $comic->asObject()->find($id),
             'category' => $category->asObject()->findAll(),
         ];
         return view('backend/pages/edit-comic', $data);
+    }
+
+    public function updateComic()
+    {
+        $request = \Config\Services::request();
+
+        if ($request->isAJAX()) {
+            $validation = \Config\Services::validation();
+            $comic_id = $request->getVar('comic_id');
+            $user_id = CIAuth::id();
+            $comic = new Comic();
+
+            if (isset($_FILES['featured_image']['name']) && !empty($_FILES['featured_image']['name'])) {
+                $this->validate([
+                    'title' => [
+                        'rules' => 'required|is_unique[comic_info.title,id,' . $comic_id . ']',
+                        'errors' => [
+                            'required' => 'Tienes que escribir un título.',
+                            'is_unique' => 'Ya hay otro cómic con el mismo título.'
+                        ]
+                    ],
+                    'price' => [
+                        'rules' => 'required|numeric|greater_than[0]',
+                        'errors' => [
+                            'required' => 'Tienes que poner un precio.',
+                            'numeric' => 'Tiene que ser un número.',
+                            'greater_than' => 'El precio tiene que ser mayor que 0.'
+                        ]
+                    ],
+                    'year' => [
+                        'rules' => 'required|numeric|greater_than[1900]',
+                        'errors' => [
+                            'required' => 'Tienes que poner el año de salida.',
+                            'numeric' => 'Tiene que ser un número',
+                            'greater_than' => 'Tiene que ser un cómic publicado como mínimo en el año 1900.',
+                        ]
+                    ],
+                    'content' => [
+                        'rules' => 'required|min_length[20]',
+                        'errors' => [
+                            'required' => 'Se necesita una descripción del cómic',
+                            'min_length' => 'Tienes que escribir al menos 20 caracteres.'
+                        ]
+                    ],
+                    'category' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Tienes que escoger una categoría.'
+                        ]
+                    ],
+                    'featured_image' => [
+                        'rules' => 'uploaded[featured_image]|is_image[featured_image]',
+                        'errors' => [
+                            'uploaded' => 'Se necesita una imagen.',
+                            'is_image' => 'Selecciona un tipo de imagen.'
+                        ]
+                    ],
+                    
+
+
+                ]);
+            } else {
+                $this->validate([
+                    'title' => [
+                        'rules' => 'required|is_unique[comic_info.title,id,' . $comic_id . ']',
+                        'errors' => [
+                            'required' => 'Tienes que escribir un título.',
+                            'is_unique' => 'Ya hay otro cómic con el mismo título.'
+                        ]
+                    ],
+                    'content' => [
+                        'rules' => 'required|min_length[20]',
+                        'errors' => [
+                            'required' => 'Se necesita una descripción del cómic',
+                            'min_length' => 'Tienes que escribir al menos 20 caracteres.'
+                        ]
+                    ],
+                    'year' => [
+                        'rules' => 'required|numeric|greater_than[1900]',
+                        'errors' => [
+                            'required' => 'Tienes que poner el año de salida.',
+                            'numeric' => 'Tiene que ser un número',
+                            'greater_than' => 'Tiene que ser un cómic publicado como mínimo en el año 1900.',
+                        ]
+                    ],
+                    'category' => [
+                        'rules' => 'required',
+                        'errors' => [
+                            'required' => 'Tienes que escoger una categoría.'
+                        ]
+                    ],
+                    'price' => [
+                        'rules' => 'required|numeric|greater_than[0]',
+                        'errors' => [
+                            'required' => 'Tienes que poner un precio.',
+                            'numeric' => 'Tiene que ser un número.',
+                            'greater_than' => 'El precio tiene que ser mayor que 0.'
+                        ]
+                    ],
+                ]);
+            }
+
+            if  ($validation->run() === FALSE){
+                $errors = $validation->getErrors();
+                return $this->response->setJSON(['status'=>0, 'token'=> csrf_hash(), 'error'=>$errors ]);
+            } else {
+               // return $this->response->setJSON(['status'=> 1, 'token'=> csrf_hash(), 'msg' => 'Validado.']);
+               if (isset($_FILES['featured_image']['name']) && !empty($_FILES['featured_image']['name'])) {
+                $path = 'images/comics';
+                $file = $request->getFile('featured_image');
+                $filename = $file->getRandomName();
+                $old_comic_featured_image = $comic->asObject()->find($comic_id)->picture;
+                
+                // actualizar imagen de portada
+                if ($file->move($path, $filename)) {
+                    
+                    // redimensionar imagen
+                    \Config\Services::image()
+                    ->withFile($path.'/'.$filename)
+                    ->resize(300, 417, true, 'height')
+                    ->save($path . '/' . $filename);
+
+                    // borrar antigua imagen
+
+                    if ($old_comic_featured_image != null && file_exists($path.'/'.$old_comic_featured_image)) {
+                        unlink($path.'/'.$old_comic_featured_image);
+                    }
+
+                    if (file_exists($path.'/'.$old_comic_featured_image)) {
+                        unlink($path.'/'.$old_comic_featured_image);
+                    }
+
+                    // actualizar detalles del cómic
+
+                    $data = array(
+                        'title' => $request->getVar('title'),
+                        'category' => $request->getVar('category'),
+                        'description' => $request->getVar('content'),
+                        'picture'=>$filename,
+                        'price' => $request->getVar('price'),
+                        'year' => $request->getVar('year'),
+                    );
+
+                    $update = $comic->update($comic_id, $data);
+
+                    if ($update){
+                        return $this->response->setJSON(['status'=> '1','token'=> csrf_hash(), 'msg'=>'Cómic actualizado correctamente.']);
+                    } else {
+                        return $this->response->setJSON(['status'=> '0', 'token'=> csrf_hash(), 'msg'=> 'Algo salió mal.']);
+                    }
+                } else {
+                    return $this->response->setJSON(['status'=>0, 'token'=> csrf_hash(), 'msg'=>'Ha ocurrido un error. No se ha podido guardar la imagen de portada.' ]);
+                }
+            } else {
+                // actualizar detalles del comic sin actualizar imagen.
+                $data = array (
+                    'title' => $request->getVar('title'),
+                        'category' => $request->getVar('category'),
+                        'description' => $request->getVar('content'),
+                        'price' => $request->getVar('price'),
+                        'year' => $request->getVar('year'),
+                );
+                $update = $comic->update($comic_id, $data);
+                if ($update){
+                    return $this->response->setJSON(['status'=> '1','token'=> csrf_hash(), 'msg'=>'Cómic actualizado correctamente.']);
+                } else {
+                    return $this->response->setJSON(['status'=> '0', 'token'=> csrf_hash(), 'msg'=> 'Algo salió mal.']);
+                }
+            }
+            }
+        };
     }
 }

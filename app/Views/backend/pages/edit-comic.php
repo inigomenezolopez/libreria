@@ -23,7 +23,7 @@
     </div>
 </div>
 
-<form action="" method="post" autocomplete="off" enctype="multipart/form-data" id="updateComicForm">
+<form action="<?= base_url(route_to('update-comic')) ?>" method="post" autocomplete="off" enctype="multipart/form-data" id="updateComicForm">
     <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" class="ci_csrf_data">
     <input type="hidden" name="comic_id" value="<?= $comic->id ?>">
     <div class="row">
@@ -109,7 +109,7 @@
         }
     });
 
-    $('#AddComicForm').on('submit', function(e) {
+    $('#updateComicForm').on('submit', function(e) {
         e.preventDefault();
         var csrfName = $('.ci_csrf_data').attr('name'); //csrf token name
         var csrfHash = $('.ci_csrf_data').val(); // csrf hash
@@ -134,8 +134,8 @@
 
                 if ($.isEmptyObject(response.error)) {
                     if (response.status == 1) {
-                        $(form)[0].reset();
-                        $('img#image-previewer').attr('src', '');
+                      //  $(form)[0].reset();
+                      //  $('img#image-previewer').attr('src', '');
                         toastr.success(response.msg)
                     } else {
                         toastr.error(response.msg);
