@@ -13,21 +13,21 @@ class Login extends BaseController
     public function login_form() {
         $loginModel = new LoginModel();
 
-        $email = $this->request->getPost('email');
-        $password = $this->request->getPost('password');
+        $email = $this->request->getVar('email');
+        $password = $this->request->getVar('password');
 
         $result = $loginModel->where('email', $email)->first();
 
-
         if ($result['id'] > 0) {
-                if ($password == $result['password']) {
-                    
-                    $this->session->set("name", $result);
+            // Verifica la contraseña hasheada
+            if (password_verify($password, $result['password'])) {
+                
+                $this->session->set("name", $result);
 
-                    return redirect()->to('http://localhost/libreria/public/');
-            
+                return redirect()->to('/');
+        
             } else{
-            echo 'Usuario o contraseña incorrectos.';
+                echo 'Usuario o contraseña incorrectos.';
             }
         } else {
             echo 'Usuario o contraseña incorrectos.';

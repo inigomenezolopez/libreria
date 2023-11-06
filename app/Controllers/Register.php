@@ -15,13 +15,14 @@ class Register extends BaseController
     public function guardar()
     {
         $registroModel = new RegistroModel();
-       $name = $this->request->getPost('name');
-       $email = $this->request->getPost('email');
-       $password = $this->request->getPost('password');
+       $name = $this->request->getVar('name');
+       $email = $this->request->getVar('email');
+       $password = $this->request->getVar('password');
 
-       
+       // Hashea la contraseña
+       $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-       $data = ['name' => $name,'email'=> $email,'password'=> $password];
+       $data = ['name' => $name,'email'=> $email,'password'=> $hashed_password];
 
        $r = $registroModel->insert($data);
 
@@ -31,10 +32,5 @@ class Register extends BaseController
        else{
         echo "Error en el registro. Inténtalo de nuevo.";
        }
-
-
-
-
-        
     }
 }
