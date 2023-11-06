@@ -11,4 +11,8 @@ class Comic extends Model
     protected $primaryKey       = 'id';
     protected $allowedFields    = ['title', 'picture', 'year', 'price', 'category', 'description'];
 
+    public function searchByTitle($title)
+    {
+        return $this->like('title', $title)->paginate(8); // Muestra 8 cómics por página
+    }
 }
