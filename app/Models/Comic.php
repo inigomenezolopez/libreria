@@ -15,4 +15,9 @@ class Comic extends Model
     {
         return $this->like('title', $title)->paginate(8); // Muestra 8 cómics por página
     }
+
+    public function getComicsByCategory($categoryId)
+{
+    return $this->where('category', $categoryId)->findAll();
+}
 }

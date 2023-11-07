@@ -10,13 +10,13 @@
 
 <!-- Header-->
 <header class="bg-dark py-3">
-    <div class="container px-4 px-lg-5 d-flex flex-column justify-content-end" style="height: 16vh;">
+    <div class="container px-4 px-lg-5 d-flex flex-column justify-content-end" style="height: 17vh;">
         <div class="text-center text-white">
             <h1 class="display-4 fw-bolder" style="font-size: 2.5rem;">Explora mundos desconocidos</h1>
             <p class="lead">Embárcate en un viaje lleno de aventuras y descubrimientos.</p>
         </div>
         <div class="d-flex justify-content-center mt-3">
-            <button class="btn btn-danger text-white">Descubre más</button>
+            <a class="btn btn-danger text-white" href="<?= base_url(route_to('latestComics')) ?>">Descubre más</a>
         </div>
     </div>
 </header>
@@ -48,7 +48,11 @@
                                 </div>
                                 <div class="text-center mt-auto">
                                     <!-- Product price-->
-                                    <?= $comic['price'] ?>€
+                                    <h5 class="font-weight-bold"><?= $comic['price'] ?>€</h5>
+                                </div>
+                                <!-- More details button -->
+                                <div class="mt-2 d-flex justify-content-center">
+                                    <a href="<?= base_url("/comics/{$comic['id']}") ?>" class="btn btn-danger">Más detalles</a>
                                 </div>
                             </div>
                         </div>
@@ -60,6 +64,7 @@
         </div>
     </div>
 </section>
+
 
 
 

@@ -1,25 +1,56 @@
 <?= $this->include('layout/navbar') ?>
 
+
+
 <?= $this->section('content') ?>
+
+<style>
+    .pagination .active .page-link {
+        background-color: #dc3545;
+        /* Bootstrap btn-danger red */
+        border-color: #dc3545;
+        /* Bootstrap btn-danger red */
+        color: white;
+        /* White text */
+    }
+
+    .pagination .page-link {
+        color: black;
+        /* Black text */
+    }
+
+    .pagination .page-link:hover {
+        background-color: #dc3545;
+        /* Bootstrap btn-danger red */
+        color: white;
+        /* White text */
+    }
+</style>
 
 <div class="container-fluid vh-100 d-flex flex-column">
     <div class="row flex-grow-1">
         <div class="col-md-3 bg-light p-3 d-flex flex-column justify-content-start">
-            <div class="mb-5 pt-3"> <!-- Añadido 'pt-3' para dar un margen superior -->
-                <h5>Filtrar por categorías</h5>
-                <div class="list-group mb-5"> <!-- Aumentado a 'mb-5' para dar un mayor margen inferior -->
+            <div class="mb-5 pt-5 text-center"> <!-- Aumentado a 'pt-5' para dar un mayor margen superior -->
+                <h4 class="mb-3">Filtrar por categorías</h4>
+                <div class="list-group mb-5 d-flex flex-column align-items-center"> <!-- Aumentado a 'mb-5' para dar un mayor margen inferior -->
                     <?php foreach ($categories as $category) : ?>
-                        <a href="<?= base_url(route_to('todos-los-comics')) ?>?category=<?= $category['category'] ?>" class="list-group-item list-group-item-action"><?= $category['category'] ?></a>
+                        <a href="<?= base_url(route_to('todos-los-comics')) ?>?category=<?= $category['category'] ?>" class="d-inline-block text-decoration-none mb-2 p-2 text-dark text-center" style="width: 50%; border-radius: 15px; transition: background-color 0.3s ease; background-color: transparent; border: 1px solid #dc3545;" onmouseover="this.style.backgroundColor='#ff7f7f';" onmouseout="this.style.backgroundColor='transparent';"><?= $category['category'] ?></a>
                     <?php endforeach; ?>
                 </div>
 
-                <h5 class="mb-3">Buscar por título</h5>
+                <h4 class="mb-3">Buscar por título</h4>
                 <form action="<?= base_url(route_to('search-comics')) ?>" method="get"> <!-- Aumentado a 'mt-5' para dar un mayor margen superior -->
-                    <input class="form-control" name="title" type="search" placeholder="Buscar" aria-label="Buscar">
-                    <input type="submit" value="Buscar" class="btn btn-primary mt-2">
+                    <input class="form-control" name="title" type="search">
+                    <input type="submit" value="Buscar" class="btn btn-danger mt-2">
                 </form>
             </div>
         </div>
+
+
+
+
+
+
 
         <!-- Lista de cómics -->
         <div class="col-md-9">
@@ -43,7 +74,11 @@
                                             </div>
                                             <div class="text-center mt-auto">
                                                 <!-- Precio del producto -->
-                                                <?= $comic['price'] ?>€
+                                                <h4 class="font-weight-bold"><?= $comic['price'] ?>€</h4>
+                                            </div>
+                                            <!-- Botón de más detalles -->
+                                            <div class="mt-2 d-flex justify-content-center">
+                                                <a href="<?= base_url("/comics/{$comic['id']}") ?>" class="btn btn-danger">Más detalles</a>
                                             </div>
                                         </div>
                                     </div>
@@ -63,16 +98,9 @@
                             <?php endfor; ?>
                         </ul>
                     </nav>
+
                 </div>
-
             </section>
-
         </div>
-
     </div>
-
-</div>
-
-</div>
-
 </div>

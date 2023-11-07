@@ -11,5 +11,8 @@ class Category extends Model
     protected $primaryKey       = 'id';
     protected $allowedFields    = ['category'];
 
-   
+    public function getCategories()
+    {
+        return $this->findAll();
+    }
 }

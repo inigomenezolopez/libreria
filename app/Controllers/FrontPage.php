@@ -56,4 +56,37 @@ class FrontPage extends BaseController
         // Pasa los cómics, las categorías y el paginador a la vista
         return view('search-comics', ['comics' => $comics, 'categories' => $categories, 'pager' => $pager]);
     }
+
+    public function comicDetails($id)
+{
+    $comicModel = new Comic();
+
+    // Obtiene los detalles del cómic por ID
+    $comic = $comicModel->find($id);
+
+    // Pasa el cómic a la vista
+    return view('comic-details', ['comic' => $comic]);
+}
+
+public function latestComics()
+{
+    $model = new Comic();
+    $data['latestComics'] = $model->orderBy('created_at', 'DESC')->findAll(6);
+    return view('latestComics', $data);
+}
+
+public function categories()
+{
+    $categoryModel = new Category();
+    $data['categories'] = $categoryModel->getCategories();
+    return view('categories', $data);
+}
+
+public function category($categoryId)
+{
+    $comicModel = new Comic();
+    $data['comics'] = $comicModel->getComicsByCategory($categoryId);
+    return view('category', $data);
+}
+
 }

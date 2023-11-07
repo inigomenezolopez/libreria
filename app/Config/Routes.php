@@ -10,15 +10,20 @@ $routes->get('/', 'FrontPage::paginaPrincipal', ['as' => 'inicio']);
 
 $routes->get('/todos-los-comics', 'FrontPage::todosComics', ['as' => 'todos-los-comics']);
 $routes->get('/search-comics', 'FrontPage::searchComics', ['as' => 'search-comics']);
+$routes->get('/comics/(:num)', 'FrontPage::comicDetails/$1');
+$routes->get('novedades', 'FrontPage::latestComics', ['as' => 'latestComics']);
 
-$routes->get('/register', 'Register::index');
+
+
+
+$routes->get('/register', 'Register::index', ['as'=> 'register']);
 
 $routes->post('/register', 'Register::guardar');
 
 $routes->get('/success', 'Register::success');
 
 
-$routes->get('/login', 'Login::index');
+$routes->get('/login', 'Login::index', ['as'=> 'login']);
 
 $routes->post('/login', 'Login::login_form');
 
