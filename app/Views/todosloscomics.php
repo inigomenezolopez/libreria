@@ -3,7 +3,7 @@
 
 
 <?= $this->section('content') ?>
-
+<title>Todos los cómics</title>
 <style>
     .pagination .active .page-link {
         background-color: #dc3545;

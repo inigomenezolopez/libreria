@@ -4,6 +4,7 @@ namespace App\Controllers;
 
 use App\Models\Comic;
 use App\Models\Category;
+use App\Models\LoginModel;
 
 class FrontPage extends BaseController
 {
@@ -88,5 +89,55 @@ public function category($categoryId)
     $data['comics'] = $comicModel->getComicsByCategory($categoryId);
     return view('category', $data);
 }
+
+
+
+public function perfil() {
+    $loginModel = new LoginModel();
+    
+    // Asume que el ID del usuario está almacenado en la sesión
+    $id = session()->get('user')['id'];
+    
+    // Busca los datos del usuario en la base de datos
+    $user = $loginModel->find($id);
+    
+    // Carga la vista de perfil y pasa los datos del usuario
+    return view('perfil', ['user' => $user]);
+}
+
+public function actualizar_perfil() {
+    $loginModel = new LoginModel();
+
+    // Asume que el ID del usuario está almacenado en la sesión
+    $id = session()->get('user')['id'];
+    
+    $name = $this->request->getVar('name');
+    $password = $this->request->getVar('password');
+    $bio = $this->request->getVar('bio');
+
+    $data = [
+        'name' => $name,
+        'bio' => $bio
+    ];
+
+    // Solo actualiza la contraseña si el usuario ha introducido una nueva
+    if (!empty($password)) {
+        $data['password'] = password_hash($password, PASSWORD_DEFAULT);
+    }
+
+    $loginModel->update($id, $data);
+
+    // Establece un mensaje de éxito en la sesión
+    session()->setFlashdata('success', 'Datos actualizados correctamente');
+
+    return redirect()->to('/perfil');
+}
+
+public function logout() {
+    session()->destroy();
+    return redirect()->to('/');
+}
+
+
 
 }

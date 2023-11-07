@@ -12,6 +12,11 @@ $routes->get('/todos-los-comics', 'FrontPage::todosComics', ['as' => 'todos-los-
 $routes->get('/search-comics', 'FrontPage::searchComics', ['as' => 'search-comics']);
 $routes->get('/comics/(:num)', 'FrontPage::comicDetails/$1');
 $routes->get('novedades', 'FrontPage::latestComics', ['as' => 'latestComics']);
+$routes->get('perfil', 'FrontPage::perfil', ['as'=> 'perfil']);
+$routes->post('actualizar_perfil', 'FrontPage::actualizar_perfil', ['as'=> 'actualizar_perfil']);
+$routes->get('logout', 'FrontPage::logout', ['as' => 'logout']);
+
+
 
 
 
@@ -43,6 +48,7 @@ $routes->group('/admin', static function ($routes) {
         $routes->get('get-category', 'AdminController::getCategory', ['as' => 'get-category']);
         $routes->post('update-category', 'AdminController::updateCategory', ['as' => 'update-category']);
         $routes->get('delete-category', 'AdminController::deleteCategory', ['as' => 'delete-category']);
+        
 
         $routes->get('trans-info', 'AdminController::transInfo', ['as' => 'trans-info']);
         $routes->get('get-trans-info', 'AdminController::getTransInfo', ['as' => 'get-trans-info']);

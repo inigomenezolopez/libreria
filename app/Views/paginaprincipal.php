@@ -7,12 +7,13 @@
 <?= $this->extend('layout/template') ?>
 
 <?= $this->section('content') ?>
-
+<title>Comic-Shop</title>
 <!-- Header-->
 <header class="bg-dark py-3">
-    <div class="container px-4 px-lg-5 d-flex flex-column justify-content-end" style="height: 17vh;">
+    <div class="container px-5 px-lg-6 d-flex flex-column justify-content-end">
         <div class="text-center text-white">
-            <h1 class="display-4 fw-bolder" style="font-size: 2.5rem;">Explora mundos desconocidos</h1>
+            <br>
+            <h1 class="display-6 fw-bolder">Explora mundos desconocidos</h1>
             <p class="lead">Embárcate en un viaje lleno de aventuras y descubrimientos.</p>
         </div>
         <div class="d-flex justify-content-center mt-3">

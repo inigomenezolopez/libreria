@@ -3,7 +3,7 @@
 
 
 <?= $this->section('content') ?>
-
+<title>Búsqueda de comics</title>
 <style>
     .pagination .active .page-link {
         background-color: #dc3545;

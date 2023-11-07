@@ -19,7 +19,7 @@
                 <p class="mb-4"><strong>Categoría:</strong> <?= $comic['category'] ?></p>
             </div>
             <h4 class="font-weight-bold mb-4"><?= $comic['price'] ?>€</h3>
-            <button class="btn btn-danger btn-lg">Comprar</button>
+            <button class="btn btn-danger btn-lg">Añadir al carro</button>
         </div>
     </div>
 </div>
