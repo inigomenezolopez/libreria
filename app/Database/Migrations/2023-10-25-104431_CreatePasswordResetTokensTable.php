@@ -10,16 +10,16 @@ class CreatePasswordResetTokensTable extends Migration
     {
         $this->forge->addField([
             'email' => [
-                'type'=> 'VARCHAR',
-                'constraint'=> '255',
+                'type' => 'VARCHAR',
+                'constraint' => '255',
             ],
             'token' => [
-                'type'=> 'VARCHAR',
-                'constraint' =>'255',
+                'type' => 'VARCHAR',
+                'constraint' => '255',
             ],
             'created_at timestamp default current_timestamp'
-            ]);
-            $this->forge->createTable('password_reset_tokens');
+        ]);
+        $this->forge->createTable('password_reset_tokens');
     }
 
     public function down()

@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <link rel="shortcut icon" type="image/x-icon" href="/libreria/public/favicon.ico" />
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -13,13 +14,13 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* Centra los elementos en el eje horizontal */
+        /* Centrar los elementos horizonalmente */
       }
 
       .dropdown {
         margin-top: 10px;
-        /* Añade un margen superior para separar el botón "Mi perfil" de la barra de búsqueda */
-        
+        /* Margen superior para separar el botón "Mi perfil" de en el menú desplegable */
+
       }
 
 

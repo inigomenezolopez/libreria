@@ -50,7 +50,7 @@
         <div class="col-md-4">
             <div class="card card-box mb-2">
                 <div class="card-body">
-                <div class="form-group">
+                    <div class="form-group">
                         <label for=""><b>Año</b></label>
                         <input type="number" class="form-control" placeholder="Introduce el año del cómic" name="year">
                         <span class="text-danger error-text price_error"></span>
@@ -65,7 +65,7 @@
                         </select>
                         <span class="text-danger error-text category_error"></span>
                     </div>
-                   
+
                     <div class="from-group">
                         <label for=""><b>Imagen de la portada</b></label>
                         <input type="file" name="featured_image" class="form-control-file form-control" height="auto">
@@ -144,8 +144,8 @@
 
                     }
                 } else {
-                    $.each(response.error, function(prefix,val){
-                        $(form).find('span.'+prefix+'_error').text(val);
+                    $.each(response.error, function(prefix, val) {
+                        $(form).find('span.' + prefix + '_error').text(val);
                     });
                 }
             }

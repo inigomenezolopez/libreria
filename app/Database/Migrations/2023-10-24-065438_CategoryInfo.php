@@ -9,14 +9,14 @@ class CategoryInfo extends Migration
     public function up()
     {
         $this->forge->addField([
-            "id"=> [
-                "type"=> "INT",
-                "unsigned"=>true,
-                "auto_increment"=> true,
+            "id" => [
+                "type" => "INT",
+                "unsigned" => true,
+                "auto_increment" => true,
             ],
             "category" => [
-                "type"=> "VARCHAR",
-                "constraint"=>"255",
+                "type" => "VARCHAR",
+                "constraint" => "255",
             ],
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'
@@ -25,7 +25,7 @@ class CategoryInfo extends Migration
         $this->forge->addkey('id', true);
         $this->forge->addkey('category');
         $this->forge->createTable('category_info');
-        }
+    }
 
     public function down()
     {

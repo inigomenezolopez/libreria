@@ -5,7 +5,7 @@
     <div class="col-md-6">
       <?php if (session()->getFlashdata('success')) : ?>
         <div class="alert alert-success" role="alert">
-            <?= session()->getFlashdata('success') ?>
+          <?= session()->getFlashdata('success') ?>
         </div>
       <?php endif; ?>
       <div class="card">
@@ -37,7 +37,3 @@
     </div>
   </div>
 </div>
-
-
-
-

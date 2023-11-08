@@ -9,47 +9,47 @@ class ComicInfo extends Migration
     public function up()
     {
         $this->forge->addField([
-            "id"=> [
-                "type"=> "INT",
-                "unsigned"=>true,
-                "auto_increment"=> true,
+            "id" => [
+                "type" => "INT",
+                "unsigned" => true,
+                "auto_increment" => true,
             ],
             "title" => [
-                "type"=> "VARCHAR",
-                "constraint"=>"255",
+                "type" => "VARCHAR",
+                "constraint" => "255",
             ],
-            "picture"=> [
-                "type"=> "VARCHAR",
-                "constraint"=>"255",
+            "picture" => [
+                "type" => "VARCHAR",
+                "constraint" => "255",
                 "null" => true,
             ],
-            "year"=> [
-                "type"=>"INT",
-                
+            "year" => [
+                "type" => "INT",
+
             ],
-            "price"=> [
-                "type"=>"FLOAT",
+            "price" => [
+                "type" => "FLOAT",
             ],
-            "category"=> [
-                "type"=>"VARCHAR",
-                "constraint"=>"255",
+            "category" => [
+                "type" => "VARCHAR",
+                "constraint" => "255",
             ],
-            "description"=> [
-                "type"=>"text",
-                
+            "description" => [
+                "type" => "text",
+
             ],
             'created_at timestamp default current_timestamp',
             'updated_at timestamp default current_timestamp on update current_timestamp'
         ]);
-        
+
         $this->forge->addkey('id', true);
         $this->forge->addkey('title');
         $this->forge->addkey('price');
         $this->forge->addkey('category');
         $this->forge->createTable('comic_info');
-        $this->forge->addForeignKey('category','category_info','category','CASCADE','CASCADE');
-        }
-    
+        $this->forge->addForeignKey('category', 'category_info', 'category', 'CASCADE', 'CASCADE');
+    }
+
 
     public function down()
     {

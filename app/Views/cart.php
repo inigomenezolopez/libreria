@@ -24,12 +24,12 @@
     }
 </style>
 <div class="container mt-5 py-5">
-    <?php if (empty($comics)): ?>
+    <?php if (empty($comics)) : ?>
         <h2 class="text-center">Carrito vacío</h2>
 
-    <?php else: ?>
+    <?php else : ?>
         <?php $total = 0; ?>
-        <?php foreach ($comics as $comic): ?>
+        <?php foreach ($comics as $comic) : ?>
             <div class="row mb-4 align-items-center border p-3">
                 <!-- Comic image -->
                 <div class="col-md-2">
@@ -56,7 +56,7 @@
         <!-- Pay button -->
         <div class="row justify-content-end">
             <div class="col-md-2">
-            <button class="btn btn-success btn-sm" onclick="location.href='<?= site_url('checkout') ?>'">Pagar</button>
+                <button class="btn btn-success btn-sm" onclick="location.href='<?= site_url('checkout') ?>'">Pagar</button>
 
             </div>
         </div>

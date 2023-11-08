@@ -46,7 +46,7 @@
                     </div>
                 </div>
                 <div class="card-footer d-flex justify-content-center">
-                    <form action="<?= base_url(route_to('pay'))?>" method="post">
+                    <form action="<?= base_url(route_to('pay')) ?>" method="post">
                         <button type="submit" class="btn btn-success btn-lg">Pagar</button>
                     </form>
 

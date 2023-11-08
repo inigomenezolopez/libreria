@@ -107,7 +107,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <?php foreach ($users as $index => $user): ?>
+                        <?php foreach ($users as $index => $user) : ?>
                             <tr>
                                 <td><?= $index + 1 ?></td>
                                 <td><?= $user['name'] ?></td>

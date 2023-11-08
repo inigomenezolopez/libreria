@@ -24,9 +24,9 @@
 	<link rel="stylesheet" href="/libreria/public/extra-assets/ijaboCropTool/ijaboCropTool.min.css">
 	<?= $this->renderSection('stylesheets') ?>
 	<style>
-		.swal2-popup{
+		.swal2-popup {
 			font-size: .87em;
-			
+
 		}
 	</style>
 </head>
@@ -38,7 +38,7 @@
 		<div class="header-left">
 			<div class="menu-icon bi bi-list"></div>
 			<div class="search-toggle-icon bi bi-search" data-toggle="header_search"></div>
-			
+
 		</div>
 		<?php include('inc/header.php'); ?>
 

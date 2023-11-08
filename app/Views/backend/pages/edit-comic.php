@@ -134,8 +134,8 @@
 
                 if ($.isEmptyObject(response.error)) {
                     if (response.status == 1) {
-                      //  $(form)[0].reset();
-                      //  $('img#image-previewer').attr('src', '');
+                        //  $(form)[0].reset();
+                        //  $('img#image-previewer').attr('src', '');
                         toastr.success(response.msg)
                     } else {
                         toastr.error(response.msg);

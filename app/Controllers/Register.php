@@ -1,14 +1,17 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\RegistroModel;
+
 class Register extends BaseController
 {
     public function index()
     {
         return view('register');
     }
-    public function success(){
+    public function success()
+    {
         return view('success');
     }
     public function guardar()
@@ -42,8 +45,8 @@ class Register extends BaseController
                 ]
             ]
         ];
-        
-        if($this->validate($rules)){
+
+        if ($this->validate($rules)) {
             $registroModel = new RegistroModel();
             $name = $this->request->getVar('name');
             $email = $this->request->getVar('email');
@@ -52,17 +55,16 @@ class Register extends BaseController
             // Hashea la contraseña
             $hashed_password = password_hash($password, PASSWORD_DEFAULT);
 
-            $data = ['name' => $name,'email'=> $email,'password'=> $hashed_password];
+            $data = ['name' => $name, 'email' => $email, 'password' => $hashed_password];
 
             $r = $registroModel->insert($data);
 
-            if($r){
+            if ($r) {
                 return redirect()->to('/success');
-            }
-            else{
+            } else {
                 echo "Error en el registro. Inténtalo de nuevo.";
             }
-        }else{
+        } else {
             $data['validation'] = $this->validator;
             echo view('register', $data);
         }

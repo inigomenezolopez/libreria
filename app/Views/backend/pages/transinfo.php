@@ -68,25 +68,26 @@
 <script src="/libreria/public/backend/src/plugins/datatables/js/dataTables.responsive.min.js"></script>
 <script src="/libreria/public/backend/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 <script>
-     var posts_DT = $('table#transinfo-table').DataTable({
+    var posts_DT = $('table#transinfo-table').DataTable({
         // que aparezca el detalle de transacción
         language: {
             url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
         },
-        scrollCollapse:true,
-        responsive:true,
-        autoWidth:false,
-        processing:true,
-        serverSide:true,
-        ajax:"<?= base_url(route_to('get-trans-info')) ?>",
-        "dom":"IBfrtip",
-        info:true,
-        fnCreatedRow:function(row, data, index) {
-            $('td', row).eq(0).html(index+1);
+        scrollCollapse: true,
+        responsive: true,
+        autoWidth: false,
+        processing: true,
+        serverSide: true,
+        ajax: "<?= base_url(route_to('get-trans-info')) ?>",
+        "dom": "IBfrtip",
+        info: true,
+        fnCreatedRow: function(row, data, index) {
+            $('td', row).eq(0).html(index + 1);
         },
-        columDefs:[
-            {orderable:false, targets:[0, 1, 2, 3, 4]}
-        ]
+        columDefs: [{
+            orderable: false,
+            targets: [0, 1, 2, 3, 4]
+        }]
     });
 </script>
 

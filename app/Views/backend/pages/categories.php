@@ -37,19 +37,19 @@
                 </div>
             </div>
             <div class="card-body">
-                 <div class="table-responsive"> 
-                <table class="table table-sm table-borderless table-hover table-striped w-100" id="categories-table">
-                    <thead>
-                        <tr>
-                            <th scope="col">#</th>
-                            <th scope="col">Nombre de la categoría</th>
-                            <th scope="col">Acción</th>
+                <div class="table-responsive">
+                    <table class="table table-sm table-borderless table-hover table-striped w-100" id="categories-table">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nombre de la categoría</th>
+                                <th scope="col">Acción</th>
 
-                        </tr>
-                    </thead>
-                    <tbody></tbody>
-                </table>
-</div>
+                            </tr>
+                        </thead>
+                        <tbody></tbody>
+                    </table>
+                </div>
             </div>
         </div>
     </div>
@@ -211,25 +211,27 @@
 
     });
 
-    $(document).on('click', '.deleteCategoryBtn', function(e){
+    $(document).on('click', '.deleteCategoryBtn', function(e) {
         e.preventDefault();
         var category_id = $(this).data('id');
         var url = "<?= base_url(route_to('delete-category')) ?>";
         swal.fire({
             title: '¿Estás seguro?',
             html: 'Quieres eliminar esta categoría.',
-            showCloseButton:true,
-            showCancelButton:true,
-            cancelButtonText:'Cancelar',
+            showCloseButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
             confirmButtonText: 'Sí, por favor',
             cancelButtonColor: '#d33',
             confirmButtonColor: '#3085d6',
-            width:300,
-            allowOutsideClick:false
+            width: 300,
+            allowOutsideClick: false
         }).then(function(result) {
-            if(result.value) {
-                $.get(url, {category_id:category_id}, function(response){
-                    if (response.status == 1){
+            if (result.value) {
+                $.get(url, {
+                    category_id: category_id
+                }, function(response) {
+                    if (response.status == 1) {
                         categories_DT.ajax.reload(null, false);
                         toastr.success(response.msg);
                     } else {

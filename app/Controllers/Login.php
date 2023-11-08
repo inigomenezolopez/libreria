@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Controllers;
+
 use App\Models\LoginModel;
+
 class Login extends BaseController
 {
     public function index()
@@ -10,7 +12,8 @@ class Login extends BaseController
         return view('login');
     }
 
-    public function login_form() {
+    public function login_form()
+    {
         helper(['form']);
         $rules = [
             'email' => [
@@ -27,16 +30,17 @@ class Login extends BaseController
                 ]
             ]
         ];
-        
-        if($this->validate($rules)){
+
+        if ($this->validate($rules)) {
             $loginModel = new LoginModel();
             $email = $this->request->getVar('email');
             $password = $this->request->getVar('password');
-    
+
             $result = $loginModel->where('email', $email)->first();
-    
+
             if ($result != null) {
-                // Verifica la contraseña hasheada
+
+                // Verificar la contraseña hasheada
                 if (password_verify($password, $result['password'])) {
                     $this->session->set('user', ['id' => $result['id'], 'name' => $result['name']]);
                     $this->session->set('isLoggedIn', true);
@@ -47,7 +51,7 @@ class Login extends BaseController
             } else {
                 return redirect()->to('/login')->with('error', 'Usuario o contraseña incorrectos.')->withInput();
             }
-        }else{
+        } else {
             $data['validation'] = $this->validator;
             echo view('login', $data);
         }

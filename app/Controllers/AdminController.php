@@ -829,26 +829,25 @@ class AdminController extends BaseController
     public function deleteComic()
     {
         $request = \Config\Services::request();
-if ($request->isAJAX()) {
-    $id = $request->getVar('comic_id');
-    $comic = new Comic();
-    $comic_to_delete = $comic->find($id); // Encuentra el cómic que se va a eliminar
+        if ($request->isAJAX()) {
+            $id = $request->getVar('comic_id');
+            $comic = new Comic();
+            $comic_to_delete = $comic->find($id); // Encuentra el cómic que se va a eliminar
 
-    // Intenta eliminar la imagen del cómic del sistema de archivos
-    $image_path = 'images/comics' .'/'. $comic_to_delete['picture'];
-    if (file_exists($image_path)) {
-        unlink($image_path);
-    }
+            // Intenta eliminar la imagen del cómic del sistema de archivos
+            $image_path = 'images/comics' . '/' . $comic_to_delete['picture'];
+            if (file_exists($image_path)) {
+                unlink($image_path);
+            }
 
-    // Ahora borra el cómic de la base de datos
-    $delete = $comic->where('id', $id)->delete();
+            // Ahora borra el cómic de la base de datos
+            $delete = $comic->where('id', $id)->delete();
 
-    if ($delete) {
-        return $this->response->setJSON(['status' => 1, 'msg' => 'Cómic eliminado correctamente.']);
-    } else {
-        return $this->response->setJSON(['status' => 0, 'msg' => 'Ha ocurrido un error inesperado.']);
-    }
-}
-
+            if ($delete) {
+                return $this->response->setJSON(['status' => 1, 'msg' => 'Cómic eliminado correctamente.']);
+            } else {
+                return $this->response->setJSON(['status' => 0, 'msg' => 'Ha ocurrido un error inesperado.']);
+            }
+        }
     }
 }

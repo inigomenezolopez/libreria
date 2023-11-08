@@ -11,34 +11,33 @@ $routes->get('/', 'FrontPage::paginaPrincipal', ['as' => 'inicio']);
 $routes->get('/todos-los-comics', 'FrontPage::todosComics', ['as' => 'todos-los-comics']);
 $routes->get('/search-comics', 'FrontPage::searchComics', ['as' => 'search-comics']);
 $routes->get('/comics/(:num)', 'FrontPage::comicDetails/$1');
+
 $routes->get('novedades', 'FrontPage::latestComics', ['as' => 'latestComics']);
-$routes->get('perfil', 'FrontPage::perfil', ['as'=> 'perfil']);
-$routes->post('actualizar_perfil', 'FrontPage::actualizar_perfil', ['as'=> 'actualizar_perfil']);
+
+$routes->get('perfil', 'FrontPage::perfil', ['as' => 'perfil']);
+$routes->post('actualizar_perfil', 'FrontPage::actualizar_perfil', ['as' => 'actualizar_perfil']);
 $routes->get('logout', 'FrontPage::logout', ['as' => 'logout']);
-$routes->get('cart', 'CartController::view', ['as'=> 'carrito']);
+
+$routes->get('cart', 'CartController::view', ['as' => 'carrito']);
 $routes->get('cart/add/(:num)', 'CartController::add/$1');
 $routes->get('cart/remove/(:num)', 'CartController::remove/$1');
 $routes->get('/checkout', 'CartController::checkout');
-$routes->post('/pay', 'CartController::pay', ['as'=> 'pay']);
+$routes->post('/pay', 'CartController::pay', ['as' => 'pay']);
 $routes->get('/payment-confirmation', 'CartController::paymentConfirmation');
 
 
 
-
-
-
-
-
-$routes->get('/register', 'Register::index', ['as'=> 'register']);
-
+$routes->get('/register', 'Register::index', ['as' => 'register']);
 $routes->post('/register', 'Register::guardar');
-
 $routes->get('/success', 'Register::success');
 
-
-$routes->get('/login', 'Login::index', ['as'=> 'login']);
-
+$routes->get('/login', 'Login::index', ['as' => 'login']);
 $routes->post('/login', 'Login::login_form');
+
+
+
+
+
 
 
 $routes->group('/admin', static function ($routes) {
@@ -56,7 +55,7 @@ $routes->group('/admin', static function ($routes) {
         $routes->get('get-category', 'AdminController::getCategory', ['as' => 'get-category']);
         $routes->post('update-category', 'AdminController::updateCategory', ['as' => 'update-category']);
         $routes->get('delete-category', 'AdminController::deleteCategory', ['as' => 'delete-category']);
-        
+
 
         $routes->get('trans-info', 'AdminController::transInfo', ['as' => 'trans-info']);
         $routes->get('get-trans-info', 'AdminController::getTransInfo', ['as' => 'get-trans-info']);

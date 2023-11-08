@@ -78,50 +78,52 @@
         language: {
             url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
         },
-        scrollCollapse:true,
-        responsive:true,
-        autoWidth:false,
-        processing:true,
-        serverSide:true,
-        ajax:"<?= base_url(route_to('get-comics')) ?>",
-        "dom":"IBfrtip",
-        info:true,
-        fnCreatedRow:function(row, data, index) {
-            $('td', row).eq(0).html(index+1);
+        scrollCollapse: true,
+        responsive: true,
+        autoWidth: false,
+        processing: true,
+        serverSide: true,
+        ajax: "<?= base_url(route_to('get-comics')) ?>",
+        "dom": "IBfrtip",
+        info: true,
+        fnCreatedRow: function(row, data, index) {
+            $('td', row).eq(0).html(index + 1);
         },
-        columDefs:[
-            {orderable:false, targets:[0, 1, 2, 3, 4, 5, 6, 7]}
-        ]
+        columDefs: [{
+            orderable: false,
+            targets: [0, 1, 2, 3, 4, 5, 6, 7]
+        }]
     });
-    
-    $(document).on('click', '.deleteComicBtn', function(e){
-    e.preventDefault();
-    var comic_id = $(this).data('id'); // Asegúrate de que cada botón tenga un atributo 'data-id' con el ID del cómic
-    var url = "<?= base_url(route_to('delete-comic')) ?>"; // Asegúrate de que esta ruta esté configurada correctamente
-    swal.fire({
-        title: '¿Estás seguro?',
-        html: 'Quieres eliminar este cómic.',
-        showCloseButton:true,
-        showCancelButton:true,
-        cancelButtonText:'Cancelar',
-        confirmButtonText: 'Sí, por favor',
-        cancelButtonColor: '#d33',
-        confirmButtonColor: '#3085d6',
-        width:300,
-        allowOutsideClick:false
-    }).then(function(result) {
-        if(result.value) {
-            $.get(url, {comic_id:comic_id}, function(response){ 
-                if (response.status == 1){
-                    posts_DT.ajax.reload(null, false); 
-                    toastr.success(response.msg);
-                } else {
-                    toastr.error(response.msg);
-                }
-            }, 'json');
-        }
-    });
-});
 
+    $(document).on('click', '.deleteComicBtn', function(e) {
+        e.preventDefault();
+        var comic_id = $(this).data('id'); // Asegúrate de que cada botón tenga un atributo 'data-id' con el ID del cómic
+        var url = "<?= base_url(route_to('delete-comic')) ?>"; // Asegúrate de que esta ruta esté configurada correctamente
+        swal.fire({
+            title: '¿Estás seguro?',
+            html: 'Quieres eliminar este cómic.',
+            showCloseButton: true,
+            showCancelButton: true,
+            cancelButtonText: 'Cancelar',
+            confirmButtonText: 'Sí, por favor',
+            cancelButtonColor: '#d33',
+            confirmButtonColor: '#3085d6',
+            width: 300,
+            allowOutsideClick: false
+        }).then(function(result) {
+            if (result.value) {
+                $.get(url, {
+                    comic_id: comic_id
+                }, function(response) {
+                    if (response.status == 1) {
+                        posts_DT.ajax.reload(null, false);
+                        toastr.success(response.msg);
+                    } else {
+                        toastr.error(response.msg);
+                    }
+                }, 'json');
+            }
+        });
+    });
 </script>
 <?= $this->endSection() ?>
