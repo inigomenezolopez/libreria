@@ -15,6 +15,14 @@ $routes->get('novedades', 'FrontPage::latestComics', ['as' => 'latestComics']);
 $routes->get('perfil', 'FrontPage::perfil', ['as'=> 'perfil']);
 $routes->post('actualizar_perfil', 'FrontPage::actualizar_perfil', ['as'=> 'actualizar_perfil']);
 $routes->get('logout', 'FrontPage::logout', ['as' => 'logout']);
+$routes->get('cart', 'CartController::view', ['as'=> 'carrito']);
+$routes->get('cart/add/(:num)', 'CartController::add/$1');
+$routes->get('cart/remove/(:num)', 'CartController::remove/$1');
+$routes->get('/checkout', 'CartController::checkout');
+$routes->post('/pay', 'CartController::pay', ['as'=> 'pay']);
+$routes->get('/payment-confirmation', 'CartController::paymentConfirmation');
+
+
 
 
 

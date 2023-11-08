@@ -9,7 +9,7 @@ class TransInfo extends Model
     protected $DBGroup          = 'default';
     protected $table            = 'trans_info';
     protected $primaryKey       = 'id';
-    protected $allowedFields    = ['name, title, price'];
+    protected $allowedFields    = ['email, title, price'];
 
    
 }

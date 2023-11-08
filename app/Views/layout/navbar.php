@@ -48,7 +48,7 @@
               <a class="nav-link" href="<?= base_url(route_to('latestComics')) ?>">Novedades</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#"><i class="fas fa-shopping-cart text-white"></i></a>
+              <a class="nav-link" href="<?= base_url(route_to('carrito')) ?>"><i class="fas fa-shopping-cart text-white"></i></a>
             </li>
           </ul>
           <form action="<?= base_url(route_to('search-comics')) ?>" method="get" class="d-flex align-items-center" role="search">
