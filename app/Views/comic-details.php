@@ -1,6 +1,7 @@
 
-<title><?= $comic['title'] ?></title>
+
 <?= $this->include('layout/navbar') ?>
+<title><?= $comic['title'] ?></title>
 
 <?= $this->section('content') ?>
 

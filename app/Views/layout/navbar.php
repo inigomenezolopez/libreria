@@ -19,6 +19,7 @@
       .dropdown {
         margin-top: 10px;
         /* Añade un margen superior para separar el botón "Mi perfil" de la barra de búsqueda */
+        
       }
 
 
