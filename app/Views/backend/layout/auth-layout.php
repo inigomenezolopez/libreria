@@ -24,19 +24,7 @@
 	<?= $this->renderSection('stylesheets') ?>
 </head>
 
-<body class="login-page">
-	<div class="login-header box-shadow">
-		<div class="container-fluid d-flex justify-content-between align-items-center">
-			<div class="brand-logo">
-				<a href="login.html">
-					<img src="/libreria/public/backend/vendors/images/deskapp-logo.svg" alt="" />
-				</a>
-			</div>
-			<div class="login-menu">
 
-			</div>
-		</div>
-	</div>
 	<div class="login-wrap d-flex align-items-center flex-wrap justify-content-center">
 		<div class="container">
 			<div class="row align-items-center">

@@ -51,12 +51,12 @@
             <div class="col-6">
                 <div class="custom-control custom-checkbox">
                     <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Remember</label>
+                    <label class="custom-control-label" for="customCheck1">Recuérdame</label>
                 </div>
             </div>
             <div class="col-6">
                 <div class="forgot-password">
-                    <a href="<?= base_url(route_to('admin.forgot.form')) ?>">Forgot Password</a>
+                    <a href="<?= base_url(route_to('admin.forgot.form')) ?>">¿Se olvidó la contraseña?</a>
                 </div>
             </div>
         </div>
@@ -65,7 +65,7 @@
                 <div class="input-group mb-0">
                     
 
-				    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Sign In">
+				    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Iniciar sesión">
 										
                 </div>
                

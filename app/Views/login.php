@@ -1,6 +1,5 @@
 <?php echo $this->include('/layout/navbar.php'); ?>
-
-
+<title>Iniciar sesión</title>
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="col-xxl-6 col-lg-8 col-md-10 col-sm-12">
         <div class="card text-bg-danger mb-3">
@@ -30,7 +29,10 @@
                         </div>
                     <?php endif; ?>
                     <button type="submit" class="btn btn-dark">Enviar</button>
-                    <p class="mt-3 text-white">¿No tienes cuenta? <a href="/libreria/public/register" class="btn btn-link text-white">Registrarse</a></p>
+                    <div class="d-flex justify-content-between mt-3">
+                        <p class="text-white">¿No tienes cuenta? <a href="<?= base_url(route_to('register'))?>" class="btn btn-link text-white">Registrarse</a></p>
+                        <p><a href="<?= base_url(route_to('admin.login.form')) ?>" class="btn btn-link text-white">Acceso como administrador ➜</a></p>
+                    </div>
                 </form>
             </div>
         </div>
