@@ -1,4 +1,6 @@
-<?php echo $this->include('/layout/navbar.php'); ?>
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('content') ?>
 <title>Iniciar sesión</title>
 <div class="container d-flex justify-content-center align-items-center" style="min-height: 100vh;">
     <div class="col-xxl-6 col-lg-8 col-md-10 col-sm-12">
@@ -8,10 +10,17 @@
                 <h1>Iniciar sesión</h1>
             </div>
             <div class="card-body">
+                <!-- Mensaje de éxito si el registro fue exitoso -->
+                <?php if (session()->getFlashdata('success')) : ?>
+                    <div class="alert alert-success" role="alert">
+                        <?= session()->getFlashdata('success') ?>
+                    </div>
+                <?php endif; ?>
                 <form method="post" action="<?= base_url("login"); ?>">
                     <div class="mb-3">
                         <label for="email" class="form-label">Dirección de correo electrónico</label>
                         <input type="email" class="form-control" name="email" id="email" aria-describedby="Input de email" required>
+                        <!-- Error si validación falla-->
                         <?php if (isset($validation)) : ?>
                             <small class="text-white"><?= $validation->getError('email'); ?></small>
                         <?php endif; ?>
@@ -19,10 +28,12 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" name="password" required>
+                        <!-- Error si validación falla-->
                         <?php if (isset($validation)) : ?>
                             <small class="text-white"><?= $validation->getError('password'); ?></small>
                         <?php endif; ?>
                     </div>
+                     <!-- Error si validación falla-->
                     <?php if (session()->getFlashdata('error')) : ?>
                         <div class="mt-3 mb-3">
                             <span class="text-white" style="font-size: larger; font-weight: bold;"><?= session()->getFlashdata('error'); ?></span>
@@ -39,4 +50,5 @@
     </div>
 </div>
 
-<?php echo $this->include('/layout/footer.php'); ?>
+
+<?= $this->endSection() ?>

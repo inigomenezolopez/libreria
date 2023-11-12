@@ -29,7 +29,7 @@ $routes->get('/payment-confirmation', 'CartController::paymentConfirmation');
 
 $routes->get('/register', 'Register::index', ['as' => 'register']);
 $routes->post('/register', 'Register::guardar');
-$routes->get('/success', 'Register::success');
+
 
 $routes->get('/login', 'Login::index', ['as' => 'login']);
 $routes->post('/login', 'Login::login_form');

@@ -1,4 +1,6 @@
-<?= $this->include('layout/navbar') ?>
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('content') ?>
 
 <title>Checkout</title>
 
@@ -55,3 +57,5 @@
         </div>
     </div>
 </div>
+
+<?= $this->endSection() ?>

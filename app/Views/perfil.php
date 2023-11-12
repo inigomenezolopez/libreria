@@ -1,11 +1,22 @@
-<?= $this->include('layout/navbar') ?>
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('content') ?>
+
 <title>Mi perfil</title>
+
 <div class="container mt-5 pt-5">
   <div class="row justify-content-center">
     <div class="col-md-6">
       <?php if (session()->getFlashdata('success')) : ?>
         <div class="alert alert-success" role="alert">
           <?= session()->getFlashdata('success') ?>
+        </div>
+      <?php endif; ?>
+      <?php if ($validationErrors = session()->getFlashdata('errors')) : ?>
+        <div class="alert alert-danger" role="alert">
+          <?php foreach ($validationErrors as $error) : ?>
+            <?= $error ?><br>
+          <?php endforeach; ?>
         </div>
       <?php endif; ?>
       <div class="card">
@@ -16,7 +27,7 @@
           <form method="post" action="<?= base_url(route_to('actualizar_perfil')) ?>">
             <div class="mb-3">
               <label for="name" class="form-label">Nombre</label>
-              <input type="text" class="form-control" name="name" id="name" value="<?= $user['name'] ?>" required>
+              <input type="text" class="form-control" name="name" id="name" value="<?= old('name', $user['name']) ?>" required>
             </div>
             <div class="mb-3">
               <label for="email" class="form-label">Email</label>
@@ -24,11 +35,16 @@
             </div>
             <div class="mb-3">
               <label for="password" class="form-label">Cambiar contraseña</label>
-              <input type="password" class="form-control" id="password" name="password">
+              <input type="password" class="form-control" id="password" name="password" value="<?= old('password') ?>">
             </div>
             <div class="mb-3">
+              <label for="confirm_password" class="form-label">Confirmar cambio de contraseña</label>
+              <input type="password" class="form-control" id="confirm_password" name="confirm_password" value="<?= old('confirm_password') ?>">
+            </div>
+
+            <div class="mb-3">
               <label for="bio" class="form-label">Biografía</label>
-              <textarea class="form-control" id="bio" name="bio" rows="3"><?= $user['bio'] ?></textarea>
+              <textarea class="form-control" id="bio" name="bio" rows="3"><?= old('bio', $user['bio']) ?></textarea>
             </div>
             <button type="submit" class="btn btn-danger">Actualizar perfil</button>
           </form>
@@ -37,3 +53,9 @@
     </div>
   </div>
 </div>
+
+
+
+
+
+<?= $this->endSection() ?>

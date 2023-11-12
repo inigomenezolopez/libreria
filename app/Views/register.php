@@ -1,4 +1,6 @@
-<?php echo $this->include('/layout/navbar.php'); ?>
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('content') ?>
 <title>Registrarse</title>
 
 
@@ -41,4 +43,4 @@
     </div>
 </div>
 
-<?php echo $this->include('/layout/footer.php'); ?>
+<?= $this->endSection() ?>

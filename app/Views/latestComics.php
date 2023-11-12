@@ -1,4 +1,6 @@
-<?= $this->include('layout/navbar') ?>
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('content') ?>
 <title>Novedades</title>
 <div class="container-fluid">
     <div class="row justify-content-center">
@@ -53,4 +55,4 @@
 
 
 
-<?= $this->section('content') ?>
+<?= $this->endSection() ?>

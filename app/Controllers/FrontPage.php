@@ -109,31 +109,66 @@ class FrontPage extends BaseController
     public function actualizar_perfil()
     {
         $loginModel = new LoginModel();
-
-
+    
         $id = session()->get('user')['id'];
-
+    
+        // validar el formulario
+        if (!$this->validate([
+            'name' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Se requiere un nombre.',
+                ]
+            ],
+            'password' => [
+                'rules' => 'permit_empty|min_length[5]|matches[confirm_password]',
+                'errors' => [
+                    'min_length' => 'La contraseña debe tener al menos 5 caracteres',
+                    'matches' => 'Las contraseñas no coinciden.',
+                ]
+            ],
+            'confirm_password' => [
+                'rules' => 'permit_empty|matches[password]',
+                'errors' => [
+                    'matches' => 'Las contraseñas no coinciden.',
+                ]
+            ],
+            'bio' => [
+                'rules' => 'required',
+                'errors' => [
+                    'required' => 'Se requiere una biografía.',
+                ]
+            ]
+        ])) {
+            return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
+        }
+    
         $name = $this->request->getVar('name');
         $password = $this->request->getVar('password');
         $bio = $this->request->getVar('bio');
-
+    
         $data = [
             'name' => $name,
             'bio' => $bio
         ];
-
+    
         // Solo actualiza la contraseña si el usuario ha introducido una nueva
         if (!empty($password)) {
             $data['password'] = password_hash($password, PASSWORD_DEFAULT);
         }
-
+    
         $loginModel->update($id, $data);
-
+    
         // Establece un mensaje de éxito en la sesión
         session()->setFlashdata('success', 'Datos actualizados correctamente');
-
+    
         return redirect()->to('/perfil');
     }
+    
+
+
+
+
 
     public function logout()
     {

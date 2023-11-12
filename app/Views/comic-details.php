@@ -1,9 +1,9 @@
-
-
-<?= $this->include('layout/navbar') ?>
-<title><?= $comic['title'] ?></title>
+<?= $this->extend('layout/template') ?>
 
 <?= $this->section('content') ?>
+<title><?= $comic['title'] ?></title>
+
+
 
 <div class="container mt-5 py-5">
     <div class="row align-items-center">
@@ -27,5 +27,5 @@
 </div>
 
 
-
+<?= $this->endSection() ?>
 

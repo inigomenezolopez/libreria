@@ -1,4 +1,6 @@
-<?= $this->include('layout/navbar') ?>
+<?= $this->extend('layout/template') ?>
+
+<?= $this->section('content') ?>
 
 <div class="container mt-5 py-5">
     <div class="row justify-content-center">
@@ -14,3 +16,5 @@
         </div>
     </div>
 </div>
+
+<?= $this->endSection() ?>

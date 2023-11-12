@@ -1,6 +1,4 @@
-<?= $this->include('layout/navbar') ?>
-
-
+<?= $this->extend('layout/template') ?>
 
 <?= $this->section('content') ?>
 <title>Todos los cómics</title>
@@ -104,3 +102,5 @@
         </div>
     </div>
 </div>
+
+<?= $this->endSection() ?>
