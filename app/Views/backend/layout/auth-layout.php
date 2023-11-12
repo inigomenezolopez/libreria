@@ -29,7 +29,7 @@
 		<div class="container">
 			<div class="row align-items-center">
 				<div class="col-md-6 col-lg-7">
-					<img src="/libreria/public/backend/vendors/images/login-page-img.png" alt="" />
+					<img src="/libreria/public/backend/vendors/images/OIG.jpg" alt="" />
 				</div>
 				<div class="col-md-6 col-lg-5">
 					<?= $this->renderSection('content') ?>

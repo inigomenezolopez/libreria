@@ -3,18 +3,18 @@
 
 <div class="login-box bg-white box-shadow border-radius-10">
     <div class="login-title">
-        <h2 class="text-center text-primary">Reset Password</h2>
+        <h2 class="text-center text-danger">Restablecer Contraseña</h2>
     </div>
-    <h6 class="mb-20">Enter your new password, confirm and submit</h6>
+    <h6 class="mb-20">Introduce tu nueva contraseña, confirma y envía</h6>
     <?php $validation = \Config\Services::validation(); ?>
     <form action="<?= base_url(route_to('reset-password-handler', $token))?>" method="POST">
-        <?= csrf_field(); ?> <!-- genera un campo de formulario oculto con un token CSRF, que ayuda a proteger contra ataques de falsificación de solicitudes entre sitios (CSRF). -->
+        <?= csrf_field(); ?>
 
         <?php if (!empty(session()->getFlashdata('success'))) : ?>
             <div class="alert alert-success">
                 <?= session()->getFlashdata('success'); ?>
                 <button type="button" class="close" data-dismiss="alert" arial-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
         <?php endif; ?>
@@ -23,14 +23,14 @@
             <div class="alert alert-danger">
                 <?= session()->getFlashdata('fail'); ?>
                 <button type="button" class="close" data-dismiss="alert" arial-label="Close">
-                    <span aria-hidden="true">&times;</span>
+                    <span aria-hidden="true">×</span>
                 </button>
             </div>
         <?php endif; ?>
 
         <div class="input-group custom">
-            <input type="password" class="form-control form-control-lg" placeholder="New Password" name="new_password">
-            <div class="input-group-append custom" value="<?= set_value('new_password') ?>">
+            <input type="password" class="form-control form-control-lg" placeholder="Nueva Contraseña" name="new_password" value="<?= set_value('new_password') ?>">
+            <div class="input-group-append custom">
                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
             </div>
         </div>
@@ -42,7 +42,7 @@
         <?php endif; ?>
 
         <div class="input-group custom">
-            <input type="password" class="form-control form-control-lg" placeholder="Confirm New Password" name="confirm_new_password" value="<?= set_value('confirm_new_password') ?>">
+            <input type="password" class="form-control form-control-lg" placeholder="Confirmar Nueva Contraseña" name="confirm_new_password" value="<?= set_value('confirm_new_password') ?>">
             <div class="input-group-append custom">
                 <span class="input-group-text"><i class="dw dw-padlock1"></i></span>
             </div>
@@ -57,13 +57,12 @@
         <div class="row align-items-center">
             <div class="col-5">
                 <div class="input-group mb-0">
-
-                    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Submit">
-
+                    <input class="btn btn-danger btn-lg btn-block" type="submit" value="Enviar">
                 </div>
             </div>
         </div>
     </form>
 </div>
+
 
 <?= $this->endSection() ?>

@@ -259,7 +259,7 @@ class AuthController extends BaseController
 
                     // redireccionar y mostrar mensaje en página de login
 
-                    return redirect()->route('admin.login.form')->with('success', 'Tu contraseña ha sido cambiada con éxito');
+                    return redirect()->route('login')->with('success', 'Tu contraseña ha sido cambiada con éxito');
                 } else {
                     return redirect()->back()->with('fail', 'Ha ocurrido un error inesperado. Inténtalo de nuevo.')->withInput();
                 }

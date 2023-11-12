@@ -56,7 +56,7 @@ class Register extends BaseController
         $r = $registroModel->insert($data);
 
         if ($r) {
-            session()->setFlashdata('success', 'Registro exitoso. Ahora puedes iniciar sesión.');
+            session()->setFlashdata('success', 'Registrado correctamente. Ahora puedes iniciar sesión.');
             return redirect()->to('/login');
         } else {
             echo "Error en el registro. Inténtalo de nuevo.";

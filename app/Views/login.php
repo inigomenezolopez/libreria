@@ -28,6 +28,10 @@
                     <div class="mb-3">
                         <label for="password" class="form-label">Contraseña</label>
                         <input type="password" class="form-control" id="password" name="password" required>
+                        <!-- Enlace para restablecer la contraseña -->
+                        <div class="mt-2">
+                            <a href="<?= base_url(route_to('admin.forgot.form')) ?>" class="btn btn-link text-white" style="padding-left: 0;">Restablecer contraseña</a>
+                        </div>
                         <!-- Error si validación falla-->
                         <?php if (isset($validation)) : ?>
                             <small class="text-white"><?= $validation->getError('password'); ?></small>
@@ -49,6 +53,7 @@
         </div>
     </div>
 </div>
+
 
 
 <?= $this->endSection() ?>
