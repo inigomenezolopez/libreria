@@ -57,7 +57,7 @@
 
 </div>
 
-
+<!-- biblioteca chart.js para crear gráfico interactivo -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <div class="row mt-4">
     <div class="col-lg-6">

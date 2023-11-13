@@ -74,7 +74,7 @@
 <script src="/libreria/public/backend/src/plugins/datatables/js/responsive.bootstrap4.min.js"></script>
 <script>
     // que aparezcan los comics
-    var posts_DT = $('table#comics-table').DataTable({
+    var posts_DT = $('table#comics-table').DataTable({ // convierte la tabla en una datatable
         language: {
             url: '//cdn.datatables.net/plug-ins/1.10.22/i18n/Spanish.json'
         },
@@ -84,10 +84,10 @@
         processing: true,
         serverSide: true,
         ajax: "<?= base_url(route_to('get-comics')) ?>",
-        "dom": "IBfrtip",
+        "dom": "IBfrtip", // orden de los elementos de control de la tabla
         info: true,
         fnCreatedRow: function(row, data, index) {
-            $('td', row).eq(0).html(index + 1);
+            $('td', row).eq(0).html(index + 1); // se numeran las filas
         },
         columDefs: [{
             orderable: false,
@@ -96,10 +96,11 @@
     });
 
     $(document).on('click', '.deleteComicBtn', function(e) {
-        e.preventDefault();
-        var comic_id = $(this).data('id'); // Asegúrate de que cada botón tenga un atributo 'data-id' con el ID del cómic
-        var url = "<?= base_url(route_to('delete-comic')) ?>"; // Asegúrate de que esta ruta esté configurada correctamente
+        e.preventDefault(); // impide que haga la funcion predeterminada de click
+        var comic_id = $(this).data('id'); 
+        var url = "<?= base_url(route_to('delete-comic')) ?>"; 
         swal.fire({
+            // Muestra un cuadro de diálogo de confirmación utilizando la biblioteca SweetAlert.
             title: '¿Estás seguro?',
             html: 'Quieres eliminar este cómic.',
             showCloseButton: true,
@@ -110,7 +111,7 @@
             confirmButtonColor: '#3085d6',
             width: 300,
             allowOutsideClick: false
-        }).then(function(result) {
+        }).then(function(result) { // cuando el usuario hace click en uno de los botones del cuadro del dialogo
             if (result.value) {
                 $.get(url, {
                     comic_id: comic_id

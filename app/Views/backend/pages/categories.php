@@ -102,14 +102,14 @@
             dataType: 'json',
             contentType: false,
             cache: false,
-            beforeSend: function() {
-                $(form).find('span.error-text').text('');
+            beforeSend: function() { // antes de enviar la peticion
+                $(form).find('span.error-text').text(''); // se borran los mensajes de error
             },
             success: function(response) {
                 // update csrf hash
                 $('.ci_csrf_data').val(response.token);
 
-                if ($.isEmptyObject(response.error)) {
+                if ($.isEmptyObject(response.error)) { // si no hay errores
                     if (response.status == 1) {
                         $(form)[0].reset();
                         modal.modal('hide');
@@ -147,7 +147,7 @@
         ]
 
     });
-
+    // EDITAR CATEGORÍAS.
     $(document).on('click', '.editCategoryBtn', function(e) {
         e.preventDefault();
         var category_id = $(this).data('id');
@@ -158,15 +158,17 @@
             var modal_title = 'Editar categoría';
             var modal_btn_text = 'Guardar cambios';
             var modal = $('body').find('div#edit-category-modal');
-            modal.find('form').find('input[type="hidden"][name="category_id"]').val(category_id);
-            modal.find('.modal-title').html(modal_title);
-            modal.find('.modal-footer > button.action').html(modal_btn_text);
-            modal.find('input[type="text"]').val(response.data.category);
+            modal.find('form').find('input[type="hidden"][name="category_id"]').val(category_id); // selecciona el modal 
+            modal.find('.modal-title').html(modal_title); // Establece el título del modal.
+            modal.find('.modal-footer > button.action').html(modal_btn_text); // Establece el texto del botón de acción del modal.
+            modal.find('input[type="text"]').val(response.data.category); // Establece el valor del campo de texto en el formulario del modal con la categoría recibida del servidor.
             modal.find('span.error-text').html('');
             modal.modal('show');
         }, 'json');
     });
 
+
+    // actualizar categorías
     $('#update_category_form').on('submit', function(e) {
         e.preventDefault();
         // csrf
@@ -211,6 +213,7 @@
 
     });
 
+    // eliminar categorías
     $(document).on('click', '.deleteCategoryBtn', function(e) {
         e.preventDefault();
         var category_id = $(this).data('id');

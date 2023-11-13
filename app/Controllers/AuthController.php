@@ -83,7 +83,7 @@ class AuthController extends BaseController
 
 
     public function forgotForm()
-    {
+    { // vista para resetear contraseña
         $data = array(
             'pageTitle' => 'Olvidó su contraseña',
             'validation' => null,
@@ -93,7 +93,7 @@ class AuthController extends BaseController
 
     public function sendPasswordResetLink()
     {
-
+        // validaciones
         $isValid = $this->validate([
 
             'email' => [
@@ -112,7 +112,7 @@ class AuthController extends BaseController
                 'validation' => $this->validator,
             ]);
         } else {
-            // Get user (admin) details
+            // Get user details
             $user = new LoginModel;
             $user_info = $user->asObject()->where('email', $this->request->getVar('email'))->first();
 
@@ -169,7 +169,7 @@ class AuthController extends BaseController
     }
 
     public function resetPassword($token)
-    {
+    { 
         $passwordResetPassword = new PasswordResetToken();
         $check_token = $passwordResetPassword->asObject()->where('token', $token)->first();
 
@@ -224,18 +224,18 @@ class AuthController extends BaseController
             $passwordResetPassword = new PasswordResetToken();
             $get_token = $passwordResetPassword->asObject()->where('token', $token)->first();
 
-            //conseguir detalles del usuario (admin)
+            //conseguir detalles del usuario
             $user = new LoginModel();
             $user_info = $user->asObject()->where('email', $get_token->email)->first();
 
             if (!$get_token) {
                 return redirect()->back()->with('fail', 'Token inválido.')->withInput();
             } else {
-                // actualizar la contraseña del admin en la BBDD
+                // actualizar la contraseña en la BBDD
                 $user->where('email', $user_info->email)
                     ->set(['password' => Hash::make($this->request->getVar('new_password'))])
                     ->update();
-                // enviar notificación al usuario (admin) mediante email
+                // enviar notificación al usuario mediante email
                 $mail_data = array(
                     'user' => $user_info,
                     'new_password' => $this->request->getVar('new_password')

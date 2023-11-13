@@ -127,6 +127,7 @@
 
 <?= $this->section('scripts') ?>
 <script>
+    // actualizar detalles del usuario
     $('#personal_details_from').on('submit', function(e) {
         e.preventDefault();
         var form = this;
@@ -162,6 +163,7 @@
         });
     });
 
+    // recortar imagen con ijaboCropTool
     $('#user_profile_file').ijaboCropTool({
         preview: '.ci-avatar-photo',
         setRatio: 1,

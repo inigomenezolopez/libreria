@@ -97,6 +97,7 @@
 <?= $this->section('scripts') ?>
 
 <script>
+    // plugin ijaboViewer para la previsualización de la imagen
     $('input[type="file"][name="featured_image"]').ijaboViewer({
         preview: '#image-previewer',
         imageShape: 'any',
@@ -108,7 +109,7 @@
             alert(message);
         }
     });
-
+    // actualizar comics, maneja respuesta y muestra mensaje de error o exito
     $('#updateComicForm').on('submit', function(e) {
         e.preventDefault();
         var csrfName = $('.ci_csrf_data').attr('name'); //csrf token name

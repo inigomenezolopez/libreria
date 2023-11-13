@@ -171,7 +171,7 @@ class FrontPage extends BaseController
 
 
     public function logout()
-    {
+    { // cierra sesion
         session()->destroy();
         return redirect()->to('/');
     }

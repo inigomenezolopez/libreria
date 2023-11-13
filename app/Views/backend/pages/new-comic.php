@@ -24,7 +24,8 @@
 </div>
 
 <form action="<?= base_url(route_to('create-comic')) ?>" method="post" autocomplete="off" enctype="multipart/form-data" id="AddComicForm">
-    <input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" class="ci_csrf_data">
+    <!-- medida de seguridad csrf para prevenir ataques, se crea un token csrf y cuando el formulario se envia se verifica ese token-->
+<input type="hidden" name="<?= csrf_token() ?>" value="<?= csrf_hash() ?>" class="ci_csrf_data">
     <div class="row">
         <div class="col-md-8">
             <div class="card card-box mb-2">
@@ -99,6 +100,8 @@
 <?= $this->section('scripts') ?>
 
 <script>
+
+    // previsualizacion de la imagen
     $('input[type="file"][name="featured_image"]').ijaboViewer({
         preview: '#image-previewer',
         imageShape: 'any',
@@ -110,7 +113,7 @@
             alert(message);
         }
     });
-
+    // añadir comic mediante ajax
     $('#AddComicForm').on('submit', function(e) {
         e.preventDefault();
         var csrfName = $('.ci_csrf_data').attr('name'); //csrf token name

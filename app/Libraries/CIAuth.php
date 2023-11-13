@@ -4,6 +4,9 @@ namespace App\Libraries;
 use App\Models\LoginModel;
 
 class CIAuth {
+
+    // Gestiona la autenticación del usuario en la sesión, incluyendo el inicio de sesión, la verificación, el olvido y la recuperación de datos del usuario.
+
     public static function setCIAuth($result) {
         $session = session();
         $array = ['logged_in'=>true];

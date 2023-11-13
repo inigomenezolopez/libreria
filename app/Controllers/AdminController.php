@@ -55,6 +55,7 @@ class AdminController extends BaseController
 
 
     public function logoutHandler()
+    // Cierra la sesión del usuario y redirige a la página de inicio de sesión. 
     {
         CIAuth::forget();
         return redirect()->route('admin.login.form')->with('fail', 'Has cerrado sesión.');
@@ -62,6 +63,7 @@ class AdminController extends BaseController
 
     public function profile()
     {
+        // Muestra la vista del perfil del usuario.
         $data = array(
             'pageTitle' => 'Perfil',
         );
@@ -70,6 +72,7 @@ class AdminController extends BaseController
 
     public function updatePersonalDetails()
     {
+        // Actualiza los detalles personales del usuario en la base de datos.
         $request = \Config\Services::request();
         $validation = \Config\Services::validation();
         $user_id = CIAuth::id();
@@ -106,6 +109,7 @@ class AdminController extends BaseController
 
     public function updateProfilePicture()
     {
+        // Actualiza la foto de perfil del usuario en la base de datos.
         $request = \Config\Services::request();
         $user_id = CIAuth::id();
         $user = new LoginModel();
@@ -132,6 +136,7 @@ class AdminController extends BaseController
 
     public function changePassword()
     {
+        // Cambia la contraseña del usuario en la base de datos.
         $request = \Config\Services::request();
 
         if ($request->isAJAX()) {
@@ -182,7 +187,7 @@ class AdminController extends BaseController
         }
     }
     public function categories()
-    {
+    { // Muestra la vista de las categorías.
         $data = [
             'pageTitle' => 'Categorías'
         ];
@@ -190,7 +195,7 @@ class AdminController extends BaseController
     }
 
     public function addCategory()
-    {
+    { // Añade una nueva categoría a la base de datos.
         $request = \Config\Services::request();
 
         if ($request->isAJAX()) {
@@ -222,6 +227,7 @@ class AdminController extends BaseController
 
     public function getCategories()
     {
+        // Recupera las categorías de la base de datos y las devuelve en formato JSON. SSP facilita la implementación de tablas de datos del lado del servidor.
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -258,6 +264,7 @@ class AdminController extends BaseController
 
     public function getCategory()
     {
+        // coge todas las categorías
         $request = \Config\Services::request();
 
         if ($request->isAJAX()) {
@@ -270,6 +277,7 @@ class AdminController extends BaseController
 
     public function updateCategory()
     {
+        // actualizar categorías
         $request = \Config\Services::request();
         if ($request->isAJAX()) {
             $id = $request->getVar('category_id');
@@ -302,6 +310,7 @@ class AdminController extends BaseController
 
     public function deleteCategory()
     {
+        // borrar categorias
         $request = \Config\Services::request();
         if ($request->isAJAX()) {
             $id = $request->getVar('category_id');
@@ -318,6 +327,7 @@ class AdminController extends BaseController
 
     public function addComic()
     {
+        // vista para añadirun nuevo comic y recopila las categorías
         $category = new Category();
         $data = [
             'pageTitle' => 'Añadir nuevo cómic',
@@ -327,7 +337,7 @@ class AdminController extends BaseController
     }
 
     public function createComic()
-    {
+    { // valida los datos del comic que se está creando, sube y redimensiona la imagen de portada y guarda todos los detalles en la bbdd
         $request = \Config\Services::request();
         if ($request->isAJAX()) {
             $validation = \Config\Services::validation();
@@ -426,7 +436,7 @@ class AdminController extends BaseController
     }
 
     public function allComics()
-    {
+    { // enseña todos los comics
         $data = [
             'pageTitle' => 'Todos los cómics'
         ];
@@ -435,6 +445,7 @@ class AdminController extends BaseController
 
     public function getComics()
     {
+        // recopila la información de los comics y las devuelven enformato json
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -516,6 +527,7 @@ class AdminController extends BaseController
 
     public function transInfo()
     {
+        // vista para el historial de transacciones
         $data = [
             'pageTitle' => 'Historial de transacciones'
         ];
@@ -523,7 +535,7 @@ class AdminController extends BaseController
     }
 
     public function getTransInfo()
-    {
+    { // coge todo el historial de transacciones 
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -531,7 +543,7 @@ class AdminController extends BaseController
             "pass" => $this->db->password,
             "db" => $this->db->database
         );
-        $table = "trans_info"; // poner el nombre de mi tabla
+        $table = "trans_info"; 
         $primaryKey = "id";
         $columns = array(
             array(
@@ -584,7 +596,7 @@ class AdminController extends BaseController
     }
 
     public function userInfo()
-    {
+    { // vista para la lista de usuarios
         $data = [
             'pageTitle' => 'Lista de usuarios'
         ];
@@ -592,7 +604,7 @@ class AdminController extends BaseController
     }
 
     public function getUserInfo()
-    {
+    { // coge los detalles del usuario
         // detalles de la base de datos
         $dbDetails = array(
             "host" => $this->db->hostname,
@@ -644,7 +656,7 @@ class AdminController extends BaseController
     }
 
     public function editComic($id)
-    {
+    { // vista para editar comics
         $comic = new Comic();
         $category = new Category();
         $data = [
@@ -656,7 +668,7 @@ class AdminController extends BaseController
     }
 
     public function updateComic()
-    {
+    { // actualiza comics
         $request = \Config\Services::request();
 
         if ($request->isAJAX()) {
@@ -827,7 +839,7 @@ class AdminController extends BaseController
     }
 
     public function deleteComic()
-    {
+    { // borrar comics
         $request = \Config\Services::request();
         if ($request->isAJAX()) {
             $id = $request->getVar('comic_id');

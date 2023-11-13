@@ -3,6 +3,7 @@
 namespace App\Libraries;
 
 class Hash
+// crear y verificar hashes de contraseñas
 {
     public static function make($password)
     {
