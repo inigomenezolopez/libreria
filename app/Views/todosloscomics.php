@@ -1,6 +1,6 @@
-<?= $this->extend('layout/template') ?>
+<?= $this->include('layout/navbar') ?>
 
-<?= $this->section('content') ?>
+
 <title>Todos los cómics</title>
 <style>
     .pagination .active .page-link {
@@ -103,4 +103,3 @@
     </div>
 </div>
 
-<?= $this->endSection() ?>
