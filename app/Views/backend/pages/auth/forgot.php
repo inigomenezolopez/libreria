@@ -1,6 +1,16 @@
 <?= $this->extend("backend/layout/auth-layout") ?>
 <?= $this->section("content") ?>
 
+<style>
+    .form-control:focus {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+
+
+
+</style>
+
 <div class="login-box bg-white box-shadow border-radius-10">
     <div class="login-title">
         <h2 class="text-center text-danger">Olvidó la contraseña</h2>

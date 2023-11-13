@@ -1,10 +1,21 @@
 <?= $this->extend("backend/layout/auth-layout") ?>
 <?= $this->section("content") ?>
 
+<style>
+    .form-control:focus {
+        border-color: #dc3545 !important;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25) !important;
+    }
+
+
+
+</style>
+
 <div class="login-box bg-white box-shadow border-radius-10">
-    <div class="login-title">
-        <h2 class="text-center text-primary">Login</h2>
-    </div>
+<div class="login-title">
+    <h2 class="text-center text-danger">Login</h2>
+</div>
+
     <?php $validation = \Config\Services::validation(); ?>
     <form action="<?= base_url(route_to('admin.login.handler')) ?>" method="POST">
         <?= csrf_field () ?>
@@ -47,25 +58,22 @@
                 <?= $validation->getError('password') ?>
             </div>
             <?php endif; ?>
-        <div class="row pb-30">
-            <div class="col-6">
-                <div class="custom-control custom-checkbox">
-                    <input type="checkbox" class="custom-control-input" id="customCheck1">
-                    <label class="custom-control-label" for="customCheck1">Recuérdame</label>
-                </div>
-            </div>
-            <div class="col-6">
-                <div class="forgot-password">
-                    <a href="<?= base_url(route_to('admin.forgot.form')) ?>">¿Se olvidó la contraseña?</a>
-                </div>
-            </div>
-        </div>
+            <div class=" pb-30">
+    <div class=" ml-auto">
+        <div class="forgot-password text-center w-100">
+    <a href="<?= base_url(route_to('admin.forgot.form')) ?>">¿Se olvidó la contraseña?</a>
+</div>
+
+    </div>
+</div>
+
         <div class="row">
             <div class="col-sm-12">
                 <div class="input-group mb-0">
                     
 
-				    <input class="btn btn-primary btn-lg btn-block" type="submit" value="Iniciar sesión">
+                <input class="btn btn-danger btn-lg btn-block" type="submit" value="Iniciar sesión">
+
 										
                 </div>
                
