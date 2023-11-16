@@ -18,18 +18,16 @@
         display: flex;
         flex-direction: column;
         align-items: center;
-        /* Centrar los elementos horizonalmente */
       }
+      
 
       .dropdown {
         margin-top: 10px;
-        /* Margen superior para separar el botón "Mi perfil" de en el menú desplegable */
-
       }
 
+
       
-
-
+      
     }
   </style>
 </head>
@@ -44,9 +42,10 @@
       <span class="navbar-toggler-icon"></span>
     </button>
     <div class="collapse navbar-collapse align-items-center" id="navbarCollapse">
-    <form action="<?= base_url(route_to('search-comics')) ?>" method="get" class=" mx-auto w-50" role="search" style="margin-left: 100px;">
+    <form action="<?= base_url(route_to('search-comics')) ?>" method="get" class=" mx-auto w-50" role="search">
       <div class="input-group">
-        <input class="form-control form-control-lg " style="margin-left: 250px;" name="title" type="search" placeholder="Buscar" aria-label="Buscar">
+      <input id="myInput" class="form-control form-control-lg" name="title" type="search" placeholder="Buscar" aria-label="Buscar">
+
         <button class="btn btn-dark ms-1 align-items-center input-group-append" type="submit">
           <i class="fas fa-search"></i>
         </button>
@@ -105,6 +104,26 @@
     });
   </script>
 
+<script>
+  window.onload = function() {
+  var input = document.getElementById('myInput');
+  if (window.innerWidth >= 992) {
+    input.style.marginLeft = '245px';
+  } else {
+    input.style.marginLeft = '0';
+  }
+};
+
+window.onresize = function() {
+  var input = document.getElementById('myInput');
+  if (window.innerWidth >= 992) {
+    input.style.marginLeft = '245px';
+  } else {
+    input.style.marginLeft = '0';
+  }
+};
+
+</script>
 </body>
 
 </html>
