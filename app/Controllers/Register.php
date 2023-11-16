@@ -23,7 +23,7 @@ class Register extends BaseController
             ]
         ],
         'email' => [
-            'rules' => 'required|min_length[6]|max_length[50]|valid_email|is_unique[userdata.email]',
+            'rules' => 'required|min_length[6]|max_length[100]|valid_email|is_unique[userdata.email]',
             'errors' => [
                 'required' => 'El correo electrónico es requerido.',
                 'min_length' => 'El correo electrónico debe tener al menos 6 caracteres.',

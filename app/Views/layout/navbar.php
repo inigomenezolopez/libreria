@@ -37,51 +37,57 @@
 <body class="pt-5 pt-md-5">
   <header>
     <!-- Fixed navbar -->
-    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-danger align-items-center">
-      <div class="container-fluid">
-        <a class="navbar-brand" href="<?= base_url(route_to('inicio')) ?>" style="font-family: 'Brush Script MT', cursive; color: #FFFFFF; font-size: 30px;">Comic-shop</a>
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
+    <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-danger">
+  <div class="container-fluid d-flex">
+    <a class="navbar-brand" href="<?= base_url(route_to('inicio')) ?>" style="font-family: 'Brush Script MT', cursive; color: #FFFFFF; font-size: 30px;">Comic-shop</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse align-items-center" id="navbarCollapse">
+    <form action="<?= base_url(route_to('search-comics')) ?>" method="get" class=" mx-auto w-50" role="search" style="margin-left: 100px;">
+      <div class="input-group">
+        <input class="form-control form-control-lg " style="margin-left: 250px;" name="title" type="search" placeholder="Buscar" aria-label="Buscar">
+        <button class="btn btn-dark ms-1 align-items-center input-group-append" type="submit">
+          <i class="fas fa-search"></i>
         </button>
-        <div class="collapse navbar-collapse justify-content-end align-items-center" id="navbarCollapse">
-          <ul class="navbar-nav align-items-center">
-            <li class="nav-item">
-              <a class="nav-link active" aria-current="page" href="<?= base_url(route_to('inicio')) ?>">Inicio</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url(route_to('todos-los-comics')) ?>">Cómics</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url(route_to('latestComics')) ?>">Novedades</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="<?= base_url(route_to('carrito')) ?>"><i class="fas fa-shopping-cart text-white"></i></a>
-            </li>
-          </ul>
-          <form action="<?= base_url(route_to('search-comics')) ?>" method="get" class="d-flex align-items-center" role="search">
-            <input class="form-control " name="title" type="search" placeholder="Buscar" aria-label="Buscar">
-            <input type="submit" value="Buscar" class="btn btn-dark ms-1 align-items-center">
-          </form>
-
-          <div class="dropdown">
-            <?php if (session()->has('user')) : ?>
-              <button class="btn btn-dark dropdown-toggle ms-2 align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; min-width: 117px;">
-                Mi perfil
-              </button>
-              <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                <li><a id="uniqueDropdownItem" class="dropdown-item" href="<?= base_url(route_to('perfil')) ?>">Ver perfil</a></li>
-
-                <li><a id="uniqueDropdownItem" class="dropdown-item" href="<?= base_url(route_to('logout')) ?>">Cerrar sesión</a></li>
-              </ul>
-            <?php else : ?>
-              <a class="btn btn-dark ms-2 align-items-center" style="color: white; min-width: 117px;" href="<?= base_url(route_to('login')) ?>">
-                Iniciar sesión
-              </a>
-            <?php endif; ?>
-          </div>
-        </div>
       </div>
-    </nav>
+    </form>
+
+
+
+      <ul class="navbar-nav align-items-center">
+        <li class="nav-item">
+          <a class="nav-link active" aria-current="page" href="<?= base_url(route_to('inicio')) ?>">Inicio</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url(route_to('todos-los-comics')) ?>">Cómics</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url(route_to('latestComics')) ?>">Novedades</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="<?= base_url(route_to('carrito')) ?>"><i class="fas fa-shopping-cart text-white"></i></a>
+        </li>
+      </ul>
+      <div class="dropdown">
+        <?php if (session()->has('user')) : ?>
+          <button class="btn btn-dark dropdown-toggle ms-2 align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; min-width: 117px;">
+            Mi perfil
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a id="uniqueDropdownItem" class="dropdown-item" href="<?= base_url(route_to('perfil')) ?>">Ver perfil</a></li>
+            <li><a id="uniqueDropdownItem" class="dropdown-item" href="<?= base_url(route_to('logout')) ?>">Cerrar sesión</a></li>
+          </ul>
+        <?php else : ?>
+          <a class="btn btn-dark ms-2 align-items-center" style="color: white; min-width: 117px;" href="<?= base_url(route_to('login')) ?>">
+            Iniciar sesión
+          </a>
+        <?php endif; ?>
+      </div>
+    </div>
+  </div>
+</nav>
+
   </header>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script> <!-- Asegúrate de que este script esté al final de tu body -->
   <script>

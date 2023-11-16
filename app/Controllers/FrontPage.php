@@ -15,7 +15,7 @@ class FrontPage extends BaseController
         // Obtiene los IDs de todos los cómics
         $allComicIds = $comicModel->findColumn('id');
 
-        // Selecciona 8 IDs al azar
+        // Selecciona 8 IDs al azar, quitar 
         $randomComicIds = array_rand(array_flip($allComicIds), 8);
 
         // Obtiene los detalles de los cómics seleccionados
