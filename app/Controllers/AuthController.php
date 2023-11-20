@@ -39,10 +39,10 @@ class AuthController extends BaseController
                 ]
             ],
             'password' => [
-                'rules' => 'required|min_length[5]',
+                'rules' => 'required',
                 'errors' => [
                     'required' => 'Se requiere una contraseña.',
-                    'min_length' => 'La contraseña tiene que tener más de 5 caracteres.'
+                    
                 ]
             ],
         ]);
@@ -52,31 +52,30 @@ class AuthController extends BaseController
                 'pageTitle' => 'Login',
                 'validation' => $this->validator
             ]);
+        }
+    
+        if ($email !== 'admin@email.com') {
+            // El correo no es del administrador
+            return view('backend/pages/auth/authlogin', [
+                'pageTitle' => 'Login',
+                'validation' => 'Solo se permite el acceso al administrador.'
+            ]);
+        }
+    
+        // Buscar el usuario en la base de datos
+        $user = $model->where('email', $email)->first();
+    
+        if ($user && Hash::check($password, $user['password'])) {
+            // El usuario existe y la contraseña es correcta
+            CIAuth::setCIAuth($user);
+            return redirect()->route('admin.home');
         } else {
-            // Comprobar si el correo es admin@email.com
-            if ($email !== 'admin@email.com') {
-                echo "<script>alert('Solo se permite el acceso al administrador.');</script>";
-                return view('backend/pages/auth/authlogin', [
-                    'pageTitle' => 'Login',
-
-                ]);
-            }
-
-            // Buscar el usuario en la base de datos
-            $user = $model->where('email', $email)->first();
-
-            // Verificar si el usuario existe y si la contraseña es correcta
-            if ($user && Hash::check($password, $user['password'])) {
-                // El usuario existe y la contraseña es correcta
-                CIAuth::setCIAuth($user);
-                return redirect()->route('admin.home');
-            } else {
-                // El usuario no existe o la contraseña es incorrecta
-                return view('backend/pages/auth/authlogin', [
-                    'pageTitle' => 'Login',
-                    'validation' => 'Usuario o contraseña incorrectos'
-                ]);
-            }
+            // El usuario no existe o la contraseña es incorrecta
+            session()->setFlashdata('fail', 'Usuario o contraseña incorrectos');
+            return view('backend/pages/auth/authlogin', [
+                'pageTitle' => 'Login',
+                'validation' => 'Usuario o contraseña incorrectos'
+            ]);
         }
     }
 

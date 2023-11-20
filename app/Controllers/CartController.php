@@ -17,17 +17,19 @@ class CartController extends Controller
             return redirect()->to('/login');
         }
 
-        // Obtiene el ID del usuario de la sesión.
         $userId = session()->get('user')['id'];
 
-        // Aquí añades el cómic al carrito del usuario.
-        // Puedes usar la sesión para almacenar los cómics en el carrito.
-        $cart = [];
-        if (session()->has("cart_$userId")) {
-            $cart = session()->get("cart_$userId");
-        }
+        // Inicializa o recupera el carrito y el contador
+        $cart = session()->get("cart_$userId") ?? [];
+        $comicCount = session()->get("comicCount_$userId") ?? 0;
+    
+        // Añade el cómic al carrito
         $cart[] = $comicId;
         session()->set("cart_$userId", $cart);
+    
+        // Incrementa el contador de cómics
+        $comicCount++;
+        session()->set("comicCount_$userId", $comicCount);
 
         // Calcula el nuevo total y guárdalo en la sesión.
         $total = session()->get("total_$userId");
@@ -83,26 +85,39 @@ class CartController extends Controller
             return redirect()->to('/login');
         }
 
-        // Obtiene el ID del usuario de la sesión.
         $userId = session()->get('user')['id'];
 
-        // Aquí quitas el cómic del carrito del usuario.
-        if (session()->has("cart_$userId")) {
-            $cart = session()->get("cart_$userId");
-            if (($key = array_search($comicId, $cart)) !== false) {
-                unset($cart[$key]);
+        // Obtener carrito, total y contador actuales
+        $cart = session()->get("cart_$userId") ?? [];
+        $total = session()->get("total_$userId") ?? 0;
+        $comicCount = session()->get("comicCount_$userId") ?? 0;
+    
+        // Buscar y eliminar el cómic del carrito
+        if (($key = array_search($comicId, $cart)) !== false) {
+            unset($cart[$key]);
+    
+            // Decrementar el contador de cómics
+            if ($comicCount > 0) {
+                $comicCount--;
             }
-            session()->set("cart_$userId", $cart);
+    
+            // Actualizar el total
+            $comicModel = new Comic();
+            $comic = $comicModel->find($comicId);
+            if ($comic) {
+                $total -= $comic['price'];
+                if ($total < 0) {
+                    $total = 0;
+                }
+            }
         }
-
-        // Calcula el nuevo total y guárdalo en la sesión.
-        $total = session()->get("total_$userId");
-        $comicModel = new Comic();
-        $comic = $comicModel->find($comicId);
-        $total -= $comic['price'];
+    
+        // Guardar cambios en la sesión
+        session()->set("cart_$userId", $cart);
         session()->set("total_$userId", $total);
-
-        // Redirige al usuario a la página del carrito.
+        session()->set("comicCount_$userId", $comicCount);
+    
+        // Redirigir al usuario a la página del carrito
         return redirect()->to('/cart');
     }
 
@@ -186,7 +201,9 @@ public function pay()
     }
 
 
-    
+    session()->remove("cart_$userId");
+    session()->set("comicCount_$userId", 0); // Resetear el contador del carrito a 0
+    session()->set("total_$userId", 0); // Resetear el total a 0
 
     // Redirige al usuario a una página de confirmación de pago.
     return redirect()->to('/payment-confirmation');

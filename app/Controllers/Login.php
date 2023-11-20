@@ -45,6 +45,8 @@ class Login extends BaseController
                 if (password_verify($password, $result['password'])) {
                     $this->session->set('user', ['id' => $result['id'], 'name' => $result['name']]);
                     $this->session->set('isLoggedIn', true);
+                    $userId = $result['id'];
+                    $this->session->set("comicCount_$userId", 0);
                     return redirect()->to('/');
                 } else {
                     return redirect()->to('/login')->with('error', 'Usuario o contraseña incorrectos.')->withInput();
