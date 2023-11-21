@@ -81,32 +81,20 @@
                         </li>
                     </ul>
                     <div class="dropdown">
-                        <?php if (session()->has('user')) : ?>
-                        <button class="btn btn-dark dropdown-toggle ms-2 align-items-center" type="button"
-                            id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false"
-                            style="color: white; min-width: 117px;">
-                            <?php
-                            $session = \Config\Services::session();
-                            $user = $session->get('user');
-                            $nombreUsuario = $user['name'];
-                            ?>
-
-                            Bienvenido, <?= esc($nombreUsuario) ?>
-
-                        </button>
-                        <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <li><a id="uniqueDropdownItem" class="dropdown-item"
-                                    href="<?= base_url(route_to('perfil')) ?>">Ver perfil</a></li>
-                            <li><a id="uniqueDropdownItem" class="dropdown-item"
-                                    href="<?= base_url(route_to('logout')) ?>">Cerrar sesión</a></li>
-                        </ul>
-                        <?php else : ?>
-                        <a class="btn btn-dark ms-2 align-items-center" style="color: white; min-width: 117px;"
-                            href="<?= base_url(route_to('login')) ?>">
-                            Iniciar sesión
-                        </a>
-                        <?php endif; ?>
-                    </div>
+        <?php if (session()->has('user')) : ?>
+          <button class="btn btn-dark dropdown-toggle ms-2 align-items-center" type="button" id="dropdownMenuButton" data-bs-toggle="dropdown" aria-expanded="false" style="color: white; min-width: 117px;">
+            Mi perfil
+          </button>
+          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+            <li><a id="uniqueDropdownItem" class="dropdown-item" href="<?= base_url(route_to('perfil')) ?>">Ver perfil</a></li>
+            <li><a id="uniqueDropdownItem" class="dropdown-item" href="<?= base_url(route_to('logout')) ?>">Cerrar sesión</a></li>
+          </ul>
+        <?php else : ?>
+          <a class="btn btn-dark ms-2 align-items-center" style="color: white; min-width: 117px;" href="<?= base_url(route_to('login')) ?>">
+            Iniciar sesión
+          </a>
+        <?php endif; ?>
+      </div>
                 </div>
             </div>
         </nav>

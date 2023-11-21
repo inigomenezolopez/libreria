@@ -10,9 +10,19 @@ class FrontPage extends BaseController
 {
     public function paginaPrincipal()
     {
-        $model = new Comic();
-        $data['latestComics'] = $model->orderBy('created_at', 'DESC')->findAll(6);
-        return view('paginaprincipal', $data);
+        $comicModel = new Comic();
+
+        // Obtiene los IDs de todos los cómics
+        $allComicIds = $comicModel->findColumn('id');
+
+        // Selecciona 8 IDs al azar, quitar 
+        $randomComicIds = array_rand(array_flip($allComicIds), 8);
+
+        // Obtiene los detalles de los cómics seleccionados
+        $comics = $comicModel->find($randomComicIds);
+
+        // Pasa los cómics a la vista
+        return view('paginaprincipal', ['comics' => $comics]);
     }
 
     public function todosComics()
@@ -123,12 +133,7 @@ class FrontPage extends BaseController
                     'matches' => 'Las contraseñas no coinciden.',
                 ]
             ],
-            'bio' => [
-                'rules' => 'required',
-                'errors' => [
-                    'required' => 'Se requiere una biografía.',
-                ]
-            ]
+            
         ])) {
             return redirect()->back()->withInput()->with('errors', $this->validator->getErrors());
         }
